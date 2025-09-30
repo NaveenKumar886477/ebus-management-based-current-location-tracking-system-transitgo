@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="icon" href="./images/logo.png">
+    <title>TransitGo - Signup</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        /* Bus Animation */
+        .bus-container {
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .bus {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            width: 140px;
+            height: 70px;
+            background: #0fad98;
+            border-radius: 12px;
+            animation: moveBus 6s linear infinite;
+            margin-left: -160px;
+            z-index: 5;
+        }
+        .window {
+            width: 20px;
+            height: 25px;
+            background: #fff;
+            margin: 5px;
+            border-radius: 4px;
+        }
+        .wheel {
+            position: absolute;
+            bottom: -12px;
+            width: 25px;
+            height: 25px;
+            background: #333;
+            border-radius: 50%;
+        }
+        .wheel.left { left: 15px; }
+        .wheel.right { right: 15px; }
+        @keyframes moveBus {
+            0% { transform: translateX(-150px);}
+            100% { transform: translateX(100vw);}
+        }
+
+        /* Form */
+        .container {
+            width: 350px;
+            max-height: 80vh;
+            overflow-y: auto;
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            text-align: center;
+            color: #fff;
+        }
+        h2 { margin-bottom: 20px; color: #00c6ff; }
+        .input-group { margin-bottom: 15px; text-align: left; }
+        .input-group input, .input-group select {
+            width: 100%; padding: 10px; border: none; border-radius: 8px; outline: none;
+        }
+        .btn {
+            width: 100%; padding: 10px; border: none; border-radius: 8px;
+            background: #00c6ff; color: white; font-size: 1rem; cursor: pointer; transition: 0.3s;
+        }
+        .btn:hover { background: #0072ff; }
+        .link { margin-top: 15px; font-size: 0.9rem; }
+        .link a { color: #00c6ff; text-decoration: none; }
+        .link a:hover { text-decoration: underline; }
+        .error { color: #ff4d4d; font-size: 0.85rem; margin-top: 5px; min-height: 18px; }
+
+        @media (max-width:420px) {
+            .container { width: 92%; padding: 22px; }
+        }
+     
+    </style>
+</head>
+<body>
+    <div class="bus-container">
+        <div class="bus">
+            <div class="window"></div>
+            <div class="window"></div>
+            <div class="window"></div>
+            <div class="wheel left"></div>
+            <div class="wheel right"></div>
+        </div>
+    </div>
+
+    <div class="container" aria-live="polite">
+        <h2>Signup</h2>
+        <form id="signupForm" onsubmit="return validateSignup();">
+            <div class="input-group">
+                <label for="firstName">First Name</label>
+                <input id="firstName" type="text" autocomplete="given-name" />
+                <p id="firstNameError" class="error"></p>
+            </div>
+            <div class="input-group">
+                <label for="lastName">Last Name</label>
+                <input id="lastName" type="text" autocomplete="family-name" />
+                <p id="lastNameError" class="error"></p>
+            </div>
+            <div class="input-group">
+                <label for="signupEmail">Email</label>
+                <input id="signupEmail" type="email" autocomplete="email" />
+                <p id="signupEmailError" class="error"></p>
+            </div>
+            <div class="input-group">
+                <label for="signupPassword">Password</label>
+                <input id="signupPassword" type="password" autocomplete="new-password" />
+                <p id="signupPasswordError" class="error"></p>
+            </div>
+            <div class="input-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input id="confirmPassword" type="password" autocomplete="new-password" />
+                <p id="confirmPasswordError" class="error"></p>
+            </div>
+            <div class="input-group">
+                <label for="signupRole">Role</label>
+                <select id="signupRole" aria-describedby="signupRoleError">
+                    <option value="">-- Select Role --</option>
+                    <option>User</option>
+                    <option>Driver</option>
+                    <option>Admin</option>
+                </select>
+                <p id="signupRoleError" class="error"></p>
+            </div>
+            <button class="btn" type="submit">Signup</button>
+        </form>
+        <div class="link">
+            Already have an account? <a href="login.html">Login</a>
+        </div>
+    </div>
+
+
+    <script>
+        // Elements
+        const firstName = document.getElementById("firstName");
+        const lastName = document.getElementById("lastName");
+        const email = document.getElementById("signupEmail");
+        const password = document.getElementById("signupPassword");
+        const confirmPassword = document.getElementById("confirmPassword");
+        const role = document.getElementById("signupRole");
+
+        // Errors
+        const firstNameError = document.getElementById("firstNameError");
+        const lastNameError = document.getElementById("lastNameError");
+        const emailError = document.getElementById("signupEmailError");
+        const passwordError = document.getElementById("signupPasswordError");
+        const confirmPasswordError = document.getElementById("confirmPasswordError");
+        const roleError = document.getElementById("signupRoleError");
+
+        const emailPattern = new RegExp('^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$');
+
+        // Real-time validation
+        firstName.addEventListener("input", () => firstNameError.textContent = !firstName.value.trim() ? "First name is required." : "");
+        lastName.addEventListener("input", () => lastNameError.textContent = !lastName.value.trim() ? "Last name is required." : "");
+        email.addEventListener("input", () => emailError.textContent = !emailPattern.test(email.value.trim()) ? "Enter a valid email." : "");
+        password.addEventListener("input", () => {
+            passwordError.textContent = password.value.length < 6 ? "Password must be at least 6 characters." : "";
+            confirmPasswordError.textContent = confirmPassword.value && confirmPassword.value !== password.value ? "Passwords do not match." : "";
+        });
+        confirmPassword.addEventListener("input", () => confirmPasswordError.textContent = confirmPassword.value !== password.value ? "Passwords do not match." : "");
+        role.addEventListener("change", () => roleError.textContent = !role.value ? "Please select a role." : "");
+
+        function validateSignup() {
+            const fn = firstName.value.trim();
+            const ln = lastName.value.trim();
+            const em = email.value.trim();
+            const pw = password.value;
+            const cpw = confirmPassword.value;
+            const rl = role.value;
+
+            // Clear all previous errors
+            firstNameError.textContent = lastNameError.textContent = emailError.textContent =
+            passwordError.textContent = confirmPasswordError.textContent = roleError.textContent = "";
+
+            let ok = true;
+            if (!fn) { firstNameError.textContent = "First name is required."; ok = false; }
+            if (!ln) { lastNameError.textContent = "Last name is required."; ok = false; }
+            if (!emailPattern.test(em)) { emailError.textContent = "Enter a valid email."; ok = false; }
+            if (pw.length < 6) { passwordError.textContent = "Password must be at least 6 characters."; ok = false; }
+            if (pw !== cpw) { confirmPasswordError.textContent = "Passwords do not match."; ok = false; }
+            if (!rl) { roleError.textContent = "Please select a role."; ok = false; }
+
+            if (!ok) return false;
+
+            // Save user data to localStorage
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+            users.push({ firstName: fn, lastName: ln, email: em, password: pw, role: rl });
+            localStorage.setItem("users", JSON.stringify(users));
+
+            alert("Signup successful! Redirecting to login page...");
+            window.location.href = "login.html";
+            return false;
+        }
+    </script>
+</body>
+</html>

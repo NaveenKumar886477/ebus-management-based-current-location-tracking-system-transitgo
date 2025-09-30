@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms & Conditions - TransitGo</title>
+  <link rel="icon" href="./images/logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1b2735);
+      background-size: 400% 400%;
+      animation: gradientMove 12s ease infinite;
+    }
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .logo img { width: 130px; margin: 30px auto 10px auto; display: block; }
+    h1 { text-align: center; font-size: 2.5rem; margin-bottom: 20px; color: #00c6ff; }
+    h2 { font-size: 1.6rem; margin-bottom: 10px; color: #00c6ff; }
+    p { font-size: 1rem; line-height: 1.7; color: #ddd; margin-bottom: 15px; }
+
+    section { max-width: 900px; margin: 30px auto; background: rgba(255,255,255,0.05); padding: 25px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+
+    ul { margin-left: 20px; }
+    li { margin-bottom: 10px; }
+
+    a { color: #00c6ff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+  </style>
+</head>
+<body>
+
+  <div class="logo"><img src="./images/logo.png" alt="TransitGo Logo"></div>
+  <h1>Terms & Conditions</h1>
+
+  <section>
+    <h2>1. Acceptance of Terms</h2>
+    <p>By accessing or using TransitGo services, you agree to be bound by these Terms & Conditions. If you do not agree, please do not use our services.</p>
+  </section>
+
+  <section>
+    <h2>2. Use of Service</h2>
+    <p>You agree to use TransitGo only for lawful purposes and in a way that does not infringe the rights of others or restrict their use of the service.</p>
+  </section>
+
+  <section>
+    <h2>3. Account Responsibilities</h2>
+    <ul>
+      <li>Keep your account login information confidential.</li>
+      <li>Be responsible for all activities under your account.</li>
+      <li>Notify us immediately of any unauthorized use.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>4. Intellectual Property</h2>
+    <p>All content, trademarks, logos, and software on TransitGo are owned by us or licensed to us. You may not reproduce, distribute, or create derivative works without permission.</p>
+  </section>
+
+  <section>
+    <h2>5. Privacy & Cookies</h2>
+    <p>Our Privacy Policy explains how we collect, use, and protect your information. By using TransitGo, you agree to our cookie usage and data collection practices.</p>
+  </section>
+
+  <section>
+    <h2>6. Limitation of Liability</h2>
+    <p>TransitGo is provided “as is” without warranties of any kind. We are not liable for any damages arising from your use of the service.</p>
+  </section>
+
+  <section>
+    <h2>7. Changes to Terms</h2>
+    <p>We may update these Terms & Conditions from time to time. Continued use of the service constitutes acceptance of any changes.</p>
+  </section>
+
+  <section>
+    <h2>8. Contact</h2>
+  <p>If you have any questions about these Terms, please contact us at <a href="mailto:support@transitgo.com">support@transitgo.com</a>.</p>
+  </section>
+      <div id="footer-placeholder"></div>
+       <script>
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            })
+            .catch(error => console.error('Error fetching footer:', error));
+    </script>
+</body>
+</html>

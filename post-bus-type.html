@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Bus Type | TransitGo</title>
+    <link rel="icon" href="./images/logo.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #28a745; /* Green for success */
+            --secondary-color: #6c757d;
+            --form-bg: #ffffff;
+            --body-bg: #f0f4f8;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--body-bg), #d9e2ec);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
+        .form-container {
+            max-width: 500px;
+            width: 95%;
+            padding: 2.5rem;
+            background: var(--form-bg);
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-container h2 {
+            font-weight: 700;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+
+        .form-control, .form-select {
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ced4da;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.25);
+        }
+
+        .btn-success {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            border-radius: 0.75rem;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .btn-success:hover {
+            background-color: #1e7e34;
+            transform: scale(1.02);
+        }
+
+        .btn-outline-secondary {
+            color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            transition: all 0.3s;
+            border-radius: 0.75rem;
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: var(--secondary-color);
+            color: var(--form-bg);
+            transform: scale(1.02);
+        }
+        
+ 
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Post Bus Type</h2>
+        <form id="busTypeForm">
+            <div class="mb-3">
+                <label for="busNumber" class="form-label">Bus Number</label>
+                <input type="text" class="form-control" id="busNumber" required>
+            </div>
+            <div class="mb-3">
+                <label for="busType" class="form-label">Bus Type</label>
+                <select id="busType" class="form-control form-select" required>
+                    <option value="">-- Select Bus Type --</option>
+                    <option>AC</option>
+                    <option>Non-AC</option>
+                    <option>Sleeper</option>
+                    <option>Seater</option>
+                    <option>Luxury</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-success w-100">Submit</button>
+        </form>
+        <div class="text-center mt-3">
+            <a href="driver-dashboard.html" class="btn btn-outline-secondary">Back to Dashboard</a>
+        </div>
+    </div>
+
+  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const busTypeForm = document.getElementById("busTypeForm");
+        busTypeForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const busTypeInfo = {
+                number: document.getElementById("busNumber").value.trim(),
+                type: document.getElementById("busType").value
+            };
+            
+            // Get current user to link bus type info
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                alert("You must be logged in to post bus information.");
+                return;
+            }
+
+            // Get all users from localStorage
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+            
+            // Find the index of the current driver
+            const driverIndex = users.findIndex(user => user.email === currentUser.email);
+            
+            if (driverIndex !== -1) {
+                // Attach bus type info to the specific driver's object
+                users[driverIndex].busType = busTypeInfo;
+                // Save the updated users array back to localStorage
+                localStorage.setItem("users", JSON.stringify(users));
+                   // --- NEW: Update global 'buses' array with bus type ---
+        let buses = JSON.parse(localStorage.getItem("buses")) || [];
+        let busIndex = buses.findIndex(b => b.number === busTypeInfo.number);
+        if (busIndex !== -1) {
+            buses[busIndex].type = busTypeInfo.type;
+            localStorage.setItem("buses", JSON.stringify(buses));
+        }
+
+                alert("Bus type saved successfully!");
+                // Redirect back to dashboard after saving
+                window.location.href = "driver-dashboard.html";
+            } else {
+                alert("Error: Driver not found. Please log in again.");
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Bus Info - TransitGo</title>
+  <link rel="icon" href="./images/logo.png">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <style>
+    body { margin:0; font-family:'Poppins', sans-serif; background:linear-gradient(135deg, #232526, #414345); color:white; display:flex; flex-direction:column; align-items:center; padding:20px;}
+    h2 { color:#00c6ff; margin-bottom:15px; }
+    .select-box { margin-bottom:20px; }
+    select { padding:10px; border-radius:8px; border:none; font-size:1rem; }
+    #map { height:400px; width:90%; border-radius:15px; margin:20px 0; }
+    .info-panel { background:rgba(255,255,255,0.1); padding:20px; border-radius:12px; width:90%; max-width:600px; }
+    .info-panel h3 { color:#ffd700; }
+    .bus-icon { font-size:30px; }
+    #progressBarContainer { width:100%; background:#444; border-radius:10px; margin:15px 0; height:20px; }
+    #progressBar { height:100%; width:0%; background:#00c6ff; border-radius:10px; transition: width 0.5s linear; }
+    ul#stoppages { padding-left:20px; }
+    ul#stoppages li { margin:5px 0; }
+  </style>
+</head>
+<body>
+
+<h2>Search Bus Info</h2>
+
+<div class="select-box">
+  <label for="bookingSelect">Select Your Booking: </label>
+  <select id="bookingSelect"></select>
+</div>
+
+<div id="map"></div>
+
+<div class="info-panel" id="infoPanel" style="display:none;">
+  <h3>Travel Details</h3>
+  <p><strong>From:</strong> <span id="fromCity"></span></p>
+  <p><strong>To:</strong> <span id="toCity"></span></p>
+  <p><strong>Distance:</strong> <span id="distance"></span> km</p>
+  <p><strong>ETA:</strong> <span id="eta"></span></p>
+  <p><strong>Status:</strong> <span id="status"></span></p>
+
+  <h3>Stoppages</h3>
+  <ul id="stoppages"></ul>
+
+  <div id="progressBarContainer"><div id="progressBar"></div></div>
+
+  <h3>Greatness of Destination</h3>
+  <div id="tips"></div>
+</div>
+
+<script>
+const map = L.map("map").setView([20.5937, 78.9629], 5);
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { attribution: "&copy; OpenStreetMap contributors" }).addTo(map);
+
+let routeLine, busMarker;
+
+// Load bookings
+const bookings = JSON.parse(localStorage.getItem("allBookings")) || [];
+const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+const userBookings = bookings.filter(b => b.email === currentUser?.email);
+
+const bookingSelect = document.getElementById("bookingSelect");
+if(userBookings.length === 0){
+  bookingSelect.innerHTML = "<option>No Bookings Found</option>";
+} else {
+  userBookings.forEach(b => {
+    let opt = document.createElement("option");
+    opt.value = b.id;
+    opt.text = `${b.from} → ${b.to} (${b.date}${b.time ? " " + b.time : ""})`;
+    bookingSelect.appendChild(opt);
+
+    // Initialize trip status if not exists
+    let allTrips = JSON.parse(localStorage.getItem("allTrips")) || [];
+    if(!allTrips.find(t => t.bookingId === b.id)){
+      allTrips.push({ bookingId: b.id, route:`${b.from} → ${b.to}`, busNumber:b.busNumber || 0, driverName:b.driverName || "Unknown", status:"active" });
+      localStorage.setItem("allTrips", JSON.stringify(allTrips));
+    }
+  });
+}
+
+bookingSelect.addEventListener("change", () => {
+  const booking = userBookings.find(b => b.id === bookingSelect.value);
+  if(booking) showBusRoute(booking);
+});
+
+async function showBusRoute(booking){
+  document.getElementById("infoPanel").style.display="block";
+  document.getElementById("fromCity").innerText=booking.from;
+  document.getElementById("toCity").innerText=booking.to;
+
+  const fromCoords = await geocodeCity(booking.from);
+  const toCoords = await geocodeCity(booking.to);
+  if(!fromCoords || !toCoords){ alert("Could not fetch coordinates"); return; }
+
+  const routeData = await fetch(`https://router.project-osrm.org/route/v1/driving/${fromCoords[1]},${fromCoords[0]};${toCoords[1]},${toCoords[0]}?overview=full&geometries=geojson&steps=true`);
+  const routeJson = await routeData.json();
+  if(!routeJson.routes?.length){ alert("Could not fetch route data!"); return; }
+
+  const route = routeJson.routes[0];
+  const coords = route.geometry.coordinates.map(c=>[c[1],c[0]]);
+  const distance = (route.distance/1000).toFixed(1);
+  const etaHours = (distance/50).toFixed(1); // avg 50 km/h
+
+  document.getElementById("distance").innerText = distance;
+  document.getElementById("eta").innerText = etaHours+" hrs";
+
+  if(routeLine) map.removeLayer(routeLine);
+  routeLine = L.polyline(coords, {color:"blue"}).addTo(map);
+  map.fitBounds(routeLine.getBounds());
+
+  if(busMarker) map.removeLayer(busMarker);
+  const busIcon = L.divIcon({ html:"🚍", className:"bus-icon", iconSize:[30,30] });
+  busMarker = L.marker(coords[0], { icon: busIcon }).addTo(map);
+
+  const stops = route.legs[0].steps.map(s=>s.name).filter(n=>n);
+  const stoppagesList = document.getElementById("stoppages");
+  stoppagesList.innerHTML="";
+  stops.slice(0,6).forEach(s=>{ let li=document.createElement("li"); li.innerText=s; stoppagesList.appendChild(li); });
+
+  let i=0;
+  function moveBus(){
+    if(i >= coords.length){
+      document.getElementById("status").innerText="✅ Arrived at destination";
+      document.getElementById("progressBar").style.width="100%";
+      updateTripStatus(booking.id, "completed"); // Update completed
+      setTimeout(()=>{ window.location.href="my-bookings.html"; },5000);
+      return;
+    }
+    busMarker.setLatLng(coords[i]);
+    let progress = (i/coords.length)*100;
+    document.getElementById("progressBar").style.width=progress+"%";
+    document.getElementById("status").innerText="🚍 On the way...";
+    updateTripStatus(booking.id, "inprogress"); // Update moving
+    i++;
+    setTimeout(moveBus, 500);
+  }
+  moveBus();
+  fetchWikiSummary(booking.to);
+}
+
+async function geocodeCity(city){
+  try{
+    const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${city}`);
+    const data = await res.json();
+    if(data?.length>0) return [parseFloat(data[0].lat), parseFloat(data[0].lon)];
+    return null;
+  }catch{ return null; }
+}
+
+async function fetchWikiSummary(city){
+  const tipsDiv = document.getElementById("tips");
+  tipsDiv.innerHTML="Loading greatness of "+city+"...";
+  try{
+    const res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${city}`);
+    const data = await res.json();
+    tipsDiv.innerHTML=data.extract ? `<p>${data.extract}</p>` : `<p>No info found</p>`;
+  }catch{ tipsDiv.innerHTML="<p>Could not fetch details</p>"; }
+}
+
+if(userBookings.length>0) showBusRoute(userBookings[0]);
+
+function updateTripStatus(bookingId, status){
+  let allTrips = JSON.parse(localStorage.getItem("allTrips")) || [];
+  const index = allTrips.findIndex(t=>t.bookingId===bookingId);
+  if(index!==-1){
+    allTrips[index].status=status;
+    localStorage.setItem("allTrips", JSON.stringify(allTrips));
+    if(status==="completed"){
+      alert("Your journey has completed safely with us. Thank you for choosing us.");
+    }
+  }
+}
+</script>
+</body>
+</html>

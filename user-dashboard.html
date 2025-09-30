@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard - TransitGo</title>
+  <link rel="icon" href="./images/logo.png">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .dashboard {
+      width: 400px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+      padding: 30px;
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 10px;
+      color: #00c6ff;
+    }
+    p {
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+      color: #ddd;
+    }
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+    .option-link {
+      display: block;
+      background: #00c6ff;
+      border-radius: 10px;
+      padding: 15px;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+      text-decoration: none;
+    }
+    .option-link:hover {
+      background: #0072ff;
+    }
+    
+   
+  </style>
+</head>
+<body>
+
+  <div class="dashboard">
+    <h2>Welcome, <span id="userName"></span> 👋</h2>
+    <p>Your personal TransitGo dashboard</p>
+
+    <div class="options">
+      <a href="book-ticket.html" class="option-link">Book Ticket</a>
+      <a href="my-bookings.html" class="option-link">My Bookings</a>
+       <a href="search-bus-info.html" class="option-link">Search Bus Info</a> <!-- ✅ New Tab -->
+      <a href="profile.html" class="option-link">Profile</a>
+      <a href="logout.html" class="option-link">Logout</a>
+    </div>
+  </div>
+
+
+<script>
+  // Load user
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  if (!currentUser) {
+    alert("Please login first!");
+    window.location.href = "login.html";
+  } else {
+    document.getElementById("userName").innerText = currentUser.name;
+  }
+        
+</script>
+
+</body>
+</html>

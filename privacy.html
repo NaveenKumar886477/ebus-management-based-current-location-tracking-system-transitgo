@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy - TransitGo</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" href="./images/logo.png">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.8rem;
+      margin: 50px 0 20px;
+      color: #00c6ff;
+    }
+
+    .policy-container {
+      max-width: 900px;
+      margin: auto;
+      padding: 40px 20px;
+      background: rgba(255,255,255,0.07);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+    }
+
+    .policy-container h2 {
+      color: #00c6ff;
+      margin-top: 25px;
+      font-size: 1.5rem;
+      border-left: 4px solid #00c6ff;
+      padding-left: 10px;
+    }
+
+    .policy-container p {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin: 12px 0;
+      color: #ddd;
+    }
+
+    ul {
+      margin: 12px 0 20px 20px;
+    }
+    ul li {
+      margin-bottom: 8px;
+      color: #ccc;
+    }
+
+     /* Footer */
+    footer {
+      background: #0d1117;
+      padding: 50px 20px 20px 20px;
+      color: #ccc;
+    }
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 40px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .footer-logo img { width: 120px; margin-bottom: 10px; }
+    .footer-logo p { font-size: 0.9rem; color: #aaa; }
+    .footer-links ul { list-style: none; padding: 0; }
+    .footer-links ul li { margin: 10px 0; }
+    .footer-links ul li a { text-decoration: none; color: #ccc; transition: 0.3s; }
+    .footer-links ul li a:hover { color: #00c6ff; }
+    .footer-social .social-icons a {
+      font-size: 1.5rem; margin-right: 15px; color: #aaa; transition: 0.3s;
+    }
+    .footer-social .social-icons a:hover { color: #00c6ff; }
+    .newsletter input {
+      padding: 10px; width: 80%; border: none; border-radius: 5px; margin-bottom: 10px;
+    }
+    .newsletter button {
+      padding: 10px 16px; border: none; border-radius: 5px;
+      background: #00c6ff; color: white; cursor: pointer; transition: 0.3s;
+    }
+    .newsletter button:hover { background: #0072ff; }
+    .footer-bottom {
+      margin-top: 30px; text-align: center; padding-top: 15px;
+      border-top: 1px solid #333; font-size: 0.85rem; color: #777;
+    }
+  /* Banner */
+  #tg-cookie-banner {
+    position: fixed;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    z-index: 9999;
+    background: rgba(13,17,23,0.9);
+    color: #e6eef9;
+    padding: 18px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+    display: none;
+    backdrop-filter: blur(6px);
+    font-family: 'Poppins', sans-serif;
+  }
+  #tg-cookie-banner .tg-row { display:flex; gap:16px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
+  #tg-cookie-banner .tg-left { max-width: 75%; min-width: 220px; }
+  #tg-cookie-banner h4 { margin:0 0 6px 0; color:#00c6ff; font-size:1rem; }
+  #tg-cookie-banner p { margin:0; font-size:0.95rem; color:#d0dbe8; opacity:0.95; }
+  #tg-cookie-actions { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+  .tg-btn {
+    padding:10px 16px; border-radius:10px; border:none; cursor:pointer; font-weight:600;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+  }
+  .tg-accept { background: linear-gradient(90deg,#00c6ff,#0072ff); color:#fff; }
+  .tg-reject { background: transparent; color:#cfe8ff; border:1px solid rgba(255,255,255,0.08); }
+  .tg-manage { background: rgba(255,255,255,0.04); color:#dbefff; border:1px solid rgba(255,255,255,0.06); }
+
+  /* Modal */
+  #tg-cookie-modal {
+    position: fixed; inset: 0; display:none; z-index:10000;
+    align-items:center; justify-content:center; padding:20px;
+  }
+  #tg-cookie-modal .overlay { position:absolute; inset:0; background:rgba(0,0,0,0.6); backdrop-filter: blur(3px); }
+  #tg-cookie-modal .modal-card {
+    position:relative; z-index:10001; width:100%; max-width:780px; border-radius:14px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+    padding:24px; box-shadow:0 12px 40px rgba(2,6,23,0.7); color:#e8f3ff;
+  }
+  .modal-card h3 { margin:0 0 8px; color:#00c6ff; }
+  .cookie-category { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 0; border-bottom:1px dashed rgba(255,255,255,0.03); }
+  .cookie-category p { margin:0; color:#cfe8ff; font-size:0.95rem; }
+  .toggle { width:48px; height:28px; background:#213040; border-radius:20px; position:relative; cursor:pointer; transition:background .2s; border:1px solid rgba(255,255,255,0.04); }
+  .toggle.on { background: linear-gradient(90deg,#00c6ff,#0072ff); box-shadow: 0 6px 16px rgba(0,198,255,0.18); }
+  .toggle .knob { position:absolute; top:3px; left:3px; width:22px; height:22px; background:#fff; border-radius:50%; transition:left .18s; }
+  .toggle.on .knob { left:23px; background:#fff; }
+
+  .modal-actions { display:flex; gap:12px; justify-content:flex-end; margin-top:18px; }
+  .tg-secondary { background:transparent; border:1px solid rgba(255,255,255,0.06); color:#dbefff; padding:10px 14px; border-radius:10px; cursor:pointer; }
+  .tg-primary { background: linear-gradient(90deg,#00c6ff,#0072ff); color:#fff; padding:10px 14px; border-radius:10px; cursor:pointer; }
+  .cookie-manage-link { color:#9fd9ff; text-decoration:underline; cursor:pointer; }
+  @media (max-width:700px) {
+    #tg-cookie-banner .tg-left { max-width: 100%; }
+    #tg-cookie-banner { padding:14px; left:12px; right:12px; bottom:12px;}}
+
+  </style>
+</head>
+<body>
+
+  <h1>Privacy Policy</h1>
+
+  <div class="policy-container">
+    <p>At <strong>TransitGo</strong>, we value your privacy. This Privacy Policy explains how we collect, use, and protect your personal information when you use our services.</p>
+
+    <h2>1. Information We Collect</h2>
+    <p>We may collect the following information when you use TransitGo:</p>
+    <ul>
+      <li>Personal details (name, email, phone number)</li>
+      <li>Location data for live bus tracking</li>
+      <li>Device information (browser, operating system)</li>
+      <li>Usage data (pages visited, interactions)</li>
+    </ul>
+
+    <h2>2. How We Use Your Information</h2>
+    <p>Your information helps us to:</p>
+    <ul>
+      <li>Provide real-time bus tracking and updates</li>
+      <li>Improve our app and website performance</li>
+      <li>Communicate with you for support and updates</li>
+      <li>Ensure security and prevent fraud</li>
+    </ul>
+
+    <h2>3. Cookies Policy 🍪</h2>
+    <p>We use cookies to enhance your browsing experience:</p>
+    <ul>
+      <li><strong>Essential Cookies</strong> – Needed for core features (login, security).</li>
+      <li><strong>Analytics Cookies</strong> – Help us understand user behavior to improve TransitGo.</li>
+      <li><strong>Preference Cookies</strong> – Save your settings (language, location).</li>
+    </ul>
+    <p>You can choose to accept or decline cookies. Most browsers allow you to control cookies in settings.</p>
+
+    <h2>4. Data Security</h2>
+    <p>We use encryption, secure servers, and regular audits to protect your information. However, no system is 100% secure online.</p>
+
+    <h2>5. Third-Party Services</h2>
+    <p>We may use trusted third-party services (like Google Maps) to enhance our platform. These services may collect data as per their own policies.</p>
+
+    <h2>6. Your Rights</h2>
+    <p>You have the right to:</p>
+    <ul>
+      <li>Access and request a copy of your personal data</li>
+      <li>Request corrections or deletion of your data</li>
+      <li>Opt-out of cookies and tracking</li>
+    </ul>
+
+    <h2>7. Updates to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. Any changes will be reflected on this page with the updated date.</p>
+
+    <h2>8. Contact Us</h2>
+    <p>If you have any questions about this Privacy Policy, please contact us at: <strong>support@transitgo.com</strong></p>
+  </div>
+
+  <!-- ====== COOKIE CONSENT (HTML part) ====== -->
+<div id="tg-cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie consent">
+  <div class="tg-row">
+    <div class="tg-left">
+      <h4>We use cookies to improve your experience</h4>
+      <p>TransitGo uses essential cookies for core functionality and optional cookies to improve the site and analytics. Manage your preferences or accept to continue.</p>
+    </div>
+    <div id="tg-cookie-actions">
+      <button class="tg-btn tg-reject" id="tg-reject-btn">Reject All</button>
+      <button class="tg-btn tg-manage" id="tg-manage-btn">Manage</button>
+      <button class="tg-btn tg-accept" id="tg-accept-btn">Accept All</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="tg-cookie-modal" aria-hidden="true">
+  <div class="overlay" onclick="closeCookieModal()"></div>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="tg-modal-title">
+    <h3 id="tg-modal-title">Cookie Settings</h3>
+    <p style="color:#cfe8ff; margin:8px 0 18px;">Choose which cookies you allow. You can change these later via the "Cookie Settings" link in the footer.</p>
+
+    <!-- Essential (locked) -->
+    <div class="cookie-category">
+      <div>
+        <strong>Essential Cookies</strong>
+        <p>Required for login, security and core functions. Always active.</p>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div class="toggle on" data-key="essential"><div class="knob"></div></div>
+      </div>
+    </div>
+
+    <!-- Analytics -->
+    <div class="cookie-category">
+      <div>
+        <strong>Analytics Cookies</strong>
+        <p>Help us understand how the site is used — anonymous and aggregated.</p>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div class="toggle" id="toggle-analytics" data-key="analytics"><div class="knob"></div></div>
+      </div>
+    </div>
+
+    <!-- Preferences -->
+    <div class="cookie-category">
+      <div>
+        <strong>Preference Cookies</strong>
+        <p>Save language, region and other UI preferences to improve your experience.</p>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div class="toggle" id="toggle-preferences" data-key="preferences"><div class="knob"></div></div>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="tg-secondary" onclick="rejectAllCookies()">Reject All</button>
+      <button class="tg-primary" onclick="saveCookiePreferences()">Save Preferences</button>
+    </div>
+  </div>
+</div>
+<!-- ====== END COOKIE CONSENT (HTML part) ====== -->
+
+    <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-logo">
+        <img src="./images/logo.png" alt="TransitGo Logo">
+        <p>TransitGo makes your bus journey smarter, safer, and easier.</p>
+      </div>
+      <div class="footer-links">
+        <h3>Quick Links</h3>
+        <ul>
+         <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">AboutUs</a></li>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+      <li><a href="terms.html">Terms & Conditions</a></li>
+       <li><a href="faq.html">Frequently Asked Questions</a></li>
+          <li><a href="services.html">Services</a></li>
+        <li><a href="download.html">Download / App</a></li>
+
+        </ul>
+      </div>
+      <div class="footer-social">
+        <h3>Follow Us</h3>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="newsletter">
+        <h3>Newsletter</h3>
+        <form onsubmit="subscribe(event)">
+          <input type="email" id="email" placeholder="Enter your email" required>
+          <button type="submit">Subscribe</button>
+          <p id="message" class="message"></p>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 <span style="color:#00c6ff;">TransitGo</span> | All Rights Reserved</p>
+    </div>
+  </footer>
+  <script>
+    function subscribe(event) {
+      event.preventDefault();
+      let email = document.getElementById("email").value.trim();
+      let message = document.getElementById("message");
+      let regex = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if(regex.test(email)) {
+        message.style.color = "lightgreen";
+        message.innerText = "✅ Thank you for subscribing!";
+        document.getElementById("email").value = "";
+      } else {
+        message.style.color = "red";
+        message.innerText = "❌ Please enter a valid email.";
+      }
+    }
+    
+(function(){
+  const banner = document.getElementById('tg-cookie-banner');
+  const modal = document.getElementById('tg-cookie-modal');
+  const acceptBtn = document.getElementById('tg-accept-btn');
+  const rejectBtn = document.getElementById('tg-reject-btn');
+  const manageBtn = document.getElementById('tg-manage-btn');
+  const toggleAnalytics = document.getElementById('toggle-analytics');
+  const togglePrefs = document.getElementById('toggle-preferences');
+
+  const defaultState = { essential: true, analytics: false, preferences: false, savedAt: null };
+
+  function readState() {
+    try { const raw = localStorage.getItem('transitgo_cookies'); return raw ? JSON.parse(raw) : null; }
+    catch(e) { return null; }
+  }
+
+  function saveState(state) {
+    state.savedAt = new Date().toISOString();
+    localStorage.setItem('transitgo_cookies', JSON.stringify(state));
+  }
+
+  function applyPreferences(state) {
+    if(state.analytics) enableAnalytics(); else disableAnalytics();
+    if(state.preferences) applyPreferenceCookies(); else removePreferenceCookies();
+  }
+
+  window.enableAnalytics = function(){ console.log('Analytics enabled'); }
+  window.disableAnalytics = function(){ console.log('Analytics disabled'); }
+  window.applyPreferenceCookies = function(){ console.log('Preferences enabled'); }
+  window.removePreferenceCookies = function(){ console.log('Preferences disabled'); }
+
+  function setToggleUI(el, on){
+    if(!el) return;
+    if(on) el.classList.add('on'); else el.classList.remove('on');
+    el.setAttribute('aria-pressed', on ? 'true' : 'false');
+  }
+
+  function initToggles(state){
+    setToggleUI(toggleAnalytics, !!state.analytics);
+    setToggleUI(togglePrefs, !!state.preferences);
+  }
+
+  const saved = readState();
+  if(!saved) banner.style.display = 'block';
+  else applyPreferences(saved);
+
+  acceptBtn.addEventListener('click', function(){
+    const state = {...defaultState, analytics:true, preferences:true};
+    saveState(state); applyPreferences(state); banner.style.display='none';
+  });
+
+  rejectBtn.addEventListener('click', function(){ rejectAllCookies(); });
+
+  manageBtn.addEventListener('click', function(){ openCookieModal(); });
+
+  [toggleAnalytics, togglePrefs].forEach(toggle => {
+    if(!toggle) return;
+    toggle.addEventListener('click', function(){ setToggleUI(toggle, !toggle.classList.contains('on')); });
+  });
+
+  window.openCookieModal = function(){
+    modal.style.display='flex'; modal.setAttribute('aria-hidden','false');
+    initToggles(readState() || defaultState);
+  }
+  window.closeCookieModal = function(){ modal.style.display='none'; modal.setAttribute('aria-hidden','true'); }
+
+  window.saveCookiePreferences = function(){
+    const state = {
+      essential: true,
+      analytics: toggleAnalytics.classList.contains('on'),
+      preferences: togglePrefs.classList.contains('on'),
+    };
+    saveState(state); applyPreferences(state); closeCookieModal(); banner.style.display='none';
+    setTimeout(()=>alert('Cookie preferences saved.'), 250);
+  }
+
+  window.rejectAllCookies = function(){
+    const state = { essential:true, analytics:false, preferences:false };
+    saveState(state); applyPreferences(state); closeCookieModal(); banner.style.display='none';
+  }
+
+  window.openCookieSettings = openCookieModal;
+
+  // Add small footer manage link if not present
+  (function(){
+    try {
+      const foot = document.querySelector('footer');
+      if(foot && !foot.querySelector('.cookie-manage-link')){
+        const el = document.createElement('div');
+        el.style.marginTop='8px';
+        el.innerHTML='<a class="cookie-manage-link" onclick="openCookieSettings()">Cookie Settings</a>';
+        foot.appendChild(el);
+      }
+    } catch(e){}
+  })();
+
+})();
+  </script>
+</body>
+</html>

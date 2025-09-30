@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services - TransitGo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" href="./images/logo.png">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(-45deg,#0f2027,#203a43,#2c5364,#1b2735);
+      background-size: 400% 400%;
+      animation: gradientMove 12s ease infinite;
+      color: #fff;
+    }
+    @keyframes gradientMove {
+      0% {background-position:0% 50%;}
+      50% {background-position:100% 50%;}
+      100% {background-position:0% 50%;}
+    }
+
+    .logo img { width: 130px; margin: 30px auto 10px; display: block; }
+    h1 { text-align: center; font-size: 2.6rem; margin-bottom: 15px; color: #00c6ff; }
+    p { text-align: center; font-size: 1.1rem; max-width: 900px; margin: 0 auto 40px; color: #ddd; }
+
+    section { max-width: 1200px; margin: auto; padding: 40px 20px; text-align: center; }
+    h2 { font-size: 2rem; margin-bottom: 30px; color: #00c6ff; }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+      gap: 25px;
+    }
+
+    .service-card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 15px;
+      padding: 30px 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-align: center;
+    }
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 30px rgba(0,198,255,0.4);
+    }
+    .service-card i {
+      font-size: 2rem;
+      color: #00c6ff;
+      margin-bottom: 15px;
+    }
+    .service-card h3 { margin: 10px 0 8px; color: #00c6ff; }
+    .service-card p { font-size: 0.95rem; color: #ccc; line-height: 1.5; }
+
+    
+          /* Footer */
+    footer {
+  background: #0d1117;
+  padding: 50px 20px 20px 20px;
+  color: #ccc;
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 40px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer-logo img {
+  width: 130px;
+  margin-bottom: 10px;
+}
+
+.footer-logo p { font-size: 0.9rem; color: #aaa; }
+
+.footer-links ul { list-style: none; padding: 0; }
+.footer-links ul li { margin: 10px 0; }
+.footer-links ul li a {
+  text-decoration: none;
+  color: #ccc;
+  transition: 0.3s;
+}
+.footer-links ul li a:hover { color: #00c6ff; }
+
+.footer-social .social-icons a {
+  font-size: 1.5rem;
+  margin-right: 15px;
+  color: #aaa;
+  transition: 0.3s;
+}
+.footer-social .social-icons a:hover { color: #00c6ff; }
+
+.newsletter input {
+  padding: 10px;
+  width: 80%;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+.newsletter button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 5px;
+  background: #00c6ff;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.newsletter button:hover { background: #0072ff; }
+
+.message { font-size: 0.9rem; margin-top: 5px; }
+
+.footer-bottom {
+  margin-top: 30px;
+  text-align: center;
+  padding-top: 15px;
+  border-top: 1px solid #333;
+  font-size: 0.85rem;
+  color: #777;
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- Logo -->
+  <div class="logo"><img src="./images/logo.png" alt="TransitGo Logo"></div>
+  <h1>Our Premium <span style="color:#00c6ff;">Services</span></h1>
+  <p>TransitGo is more than just a bus tracking app. Explore our professional services tailored for commuters, businesses, and travel enthusiasts to ensure smoother journeys every day.</p>
+
+  <!-- Services -->
+  <section>
+    <h2>What We Offer</h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <i class="fas fa-building"></i>
+        <h3>Corporate Packages</h3>
+        <p>Special plans for businesses to provide employees seamless travel solutions, priority tracking, and monthly reports.</p>
+      </div>
+      <div class="service-card">
+        <i class="fas fa-headset"></i>
+        <h3>Premium Customer Support</h3>
+        <p>24/7 dedicated support for commuters, ensuring faster response times and personalized assistance.</p>
+      </div>
+      <div class="service-card">
+      <i class="fas fa-map-marked-alt"></i>
+        <h3>Travel Planning</h3>
+        <p>Plan your trips with ease. Get optimal routes, estimated travel times, and bus schedules tailored to your journey.</p>
+      </div>
+      <div class="service-card">
+        <i class="fas fa-chart-line"></i>
+        <h3>Analytics for Operators</h3>
+        <p>We provide bus operators with insights, data-driven reports, and performance metrics to enhance service efficiency.</p>
+      </div>
+      <div class="service-card">
+        <i class="fas fa-shield-alt"></i>
+        <h3>Safety & Security</h3>
+        <p>Real-time tracking, emergency alerts, and secure travel options to keep passengers and their belongings safe.</p>
+      </div>
+      <div class="service-card">
+        <i class="fas fa-mobile-alt"></i>
+        <h3>App Integration</h3>
+        <p>Seamless integration with Android and iOS apps to ensure users have access to all services anytime, anywhere.</p>
+      </div>
+      <div class="service-card">
+        <i class="fas fa-calendar-alt"></i>
+        <h3>Event Transit Services</h3>
+        <p>Specialized bus planning for events, exhibitions, and corporate gatherings to manage passenger flow efficiently.</p>
+      </div>
+      <div class="service-card">
+        <i class="fas fa-bus-alt"></i>
+        <h3>Custom Bus Routes</h3>
+        <p>Flexible route customization for premium clients, allowing priority stops and optimized travel schedules.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer (reuse your footer section here) -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-logo">
+        <img src="./images/logo.png" alt="TransitGo Logo">
+        <p>TransitGo makes your bus journey smarter, safer, and easier.</p>
+      </div>
+      <div class="footer-links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">AboutUs</a></li>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms & Conditions</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="download.html">Download / App</a></li>
+        </ul>
+      </div>
+      <div class="footer-social">
+        <h3>Follow Us</h3>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="newsletter">
+        <h3>Newsletter</h3>
+        <form onsubmit="subscribe(event)">
+          <input type="email" id="email" placeholder="Enter your email" required>
+          <button type="submit">Subscribe</button>
+          <p id="message" class="message"></p>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 <span style="color:#00c6ff;">TransitGo</span> | All Rights Reserved</p>
+    </div>
+  </footer>
+
+  <script>
+    function subscribe(event) {
+      event.preventDefault();
+      let email = document.getElementById("email").value.trim();
+      let message = document.getElementById("message");
+      let regex = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if(regex.test(email)) {
+        message.style.color = "lightgreen";
+        message.innerText = "✅ Thank you for subscribing!";
+        document.getElementById("email").value = "";
+      } else {
+        message.style.color = "red";
+        message.innerText = "❌ Please enter a valid email.";
+      }
+    }
+  </script>
+</body>
+</html>

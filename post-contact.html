@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Contact | TransitGo</title>
+    <link rel="icon" href="./images/logo.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --warning-color: #ffc107;
+            --secondary-color: #6c757d;
+            --form-bg: #ffffff;
+            --body-bg: #f0f4f8;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--body-bg), #d9e2ec);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
+        .form-container {
+            max-width: 500px;
+            width: 95%;
+            padding: 2.5rem;
+            background: var(--form-bg);
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-container h2 {
+            font-weight: 700;
+            color: var(--warning-color);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+
+        .form-control, .form-select {
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ced4da;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--warning-color);
+            box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
+        }
+
+        .btn-warning {
+            background-color: var(--warning-color);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            border-radius: 0.75rem;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+            transform: scale(1.02);
+        }
+
+        .btn-outline-secondary {
+            color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            transition: all 0.3s;
+            border-radius: 0.75rem;
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: var(--secondary-color);
+            color: var(--form-bg);
+            transform: scale(1.02);
+        }
+        
+   
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Post Contact Details</h2>
+        <form id="contactForm">
+            <div class="mb-3">
+                <label for="busNumber" class="form-label">Bus Number</label>
+                <input type="text" class="form-control" id="busNumber" required>
+            </div>
+            <div class="mb-3">
+                <label for="driverName" class="form-label">Driver/Travel Name</label>
+                <input type="text" class="form-control" id="driverName" required>
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Phone Number</label>
+                <input type="tel" class="form-control" id="phone" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" required>
+            </div>
+            <button type="submit" class="btn btn-warning w-100">Submit</button>
+        </form>
+        <div class="text-center mt-3">
+            <a href="driver-dashboard.html" class="btn btn-outline-secondary">Back to Dashboard</a>
+        </div>
+    </div>
+  
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const contactForm = document.getElementById("contactForm");
+        contactForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const contactInfo = {
+                number: document.getElementById("busNumber").value.trim(),
+                name: document.getElementById("driverName").value.trim(),
+                phone: document.getElementById("phone").value.trim(),
+                email: document.getElementById("email").value.trim()
+            };
+            
+            // Get current user to link contact info
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                alert("You must be logged in to post contact information.");
+                return;
+            }
+
+            // Get all users from localStorage
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+            
+            // Find the index of the current driver
+            const driverIndex = users.findIndex(user => user.email === currentUser.email);
+            
+            if (driverIndex !== -1) {
+                // Attach contact info to the specific driver's object
+                users[driverIndex].contact = contactInfo;
+                // Save the updated users array back to localStorage
+                localStorage.setItem("users", JSON.stringify(users));
+                alert("Contact information saved successfully!");
+                // Redirect back to dashboard after saving
+                window.location.href = "driver-dashboard.html";
+            } else {
+                alert("Error: Driver not found. Please log in again.");
+            }
+        });
+    </script>
+</body>
+</html>
