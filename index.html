@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,18 +17,17 @@
       background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1b2735);
       background-size: 400% 400%;
       animation: gradientMove 12s ease infinite;
-      padding-top: 30px; /* Added padding to ensure content isn't under top edge */
     }
 
     @keyframes gradientMove {
-      0% { background-position: 0% 50; }
+      0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
 
     .logo img {
       width: 140px;
-      margin-top: 0; /* Adjusted from 30px due to body padding */
+      margin-top: 30px;
     }
 
     h1 {
@@ -48,33 +48,33 @@
       justify-content: center;
       gap: 20px;
       margin-bottom: 50px;
-      padding: 0 20px; /* Added padding for narrow screens */
     }
 
    .btn {
-      padding: 12px 28px;
-      border: none;
-      border-radius: 30px;
-      font-size: 1rem;
-      cursor: pointer;
-      font-weight: 600;
-      background: linear-gradient(90deg, #00c6ff, #0072ff);
-      color: white;
-      transition: 0.3s ease;
-      box-shadow: 0 0 15px rgba(0, 198, 255, 0.6);
-      animation: pulse 2s infinite;
-    }
+  padding: 12px 28px;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  color: white;
+  transition: 0.3s ease;
+  box-shadow: 0 0 15px rgba(0, 198, 255, 0.6);
+  animation: pulse 2s infinite;
+}
 
-    .btn:hover {
-      transform: translateY(-3px) scale(1.05);
-      box-shadow: 0px 0px 25px rgba(0, 198, 255, 0.9);
-    }
+.btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0px 0px 25px rgba(0, 198, 255, 0.9);
+}
 
-    @keyframes pulse {
-      0% { box-shadow: 0 0 10px rgba(0, 198, 255, 0.6); }
-      50% { box-shadow: 0 0 25px rgba(0, 198, 255, 1); }
-      100% { box-shadow: 0 0 10px rgba(0, 198, 255, 0.6); }
-    }
+@keyframes pulse {
+  0% { box-shadow: 0 0 10px rgba(0, 198, 255, 0.6); }
+  50% { box-shadow: 0 0 25px rgba(0, 198, 255, 1); }
+  100% { box-shadow: 0 0 10px rgba(0, 198, 255, 0.6); }
+}
+
 
     section {
       margin: 50px auto;
@@ -89,10 +89,23 @@
     }
 
     .features {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Always 3 per row */
+  gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .features {
+    grid-template-columns: repeat(2, 1fr); /* 2 per row on tablet */
+  }
+}
+
+@media (max-width: 600px) {
+  .features {
+    grid-template-columns: 1fr; /* 1 per row on mobile */
+  }
+}
+
 
     .card {
       background: rgba(255, 255, 255, 0.05);
@@ -108,41 +121,48 @@
       box-shadow: 0 8px 20px rgba(0, 198, 255, 0.4);
     }
 
+    footer {
+      margin: 40px 0 20px 0;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+
     /* Hero Section */
     .hero {
       margin: 30px auto 60px auto;
       max-width: 800px;
-      position: relative;
     }
-    
+    .hero img {
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
     .bus-animation {
-      font-size: 2.5rem;
-      position: absolute;
-      top: 120px;
-      left: -80px;
-      animation: moveBus 20s linear infinite;
-      z-index: 1;
-    }
-    @keyframes moveBus {
-      0% {
-        left: -100px;
-        transform: scaleX(1);
-      }
-      50% {
-        left: 100%; 
-        transform: scaleX(1);
-      }
-      51% {
-        transform: scaleX(-1);
-      }
-      100% {
-        left: -100px; 
-        transform: scaleX(-1);
-      }
-    }
+  font-size: 2.5rem;
+  position: absolute;
+  top: 120px;
+  left: -80px;
+  animation: moveBus 20s linear infinite; /* slower */
+}
+@keyframes moveBus {
+  0% {
+    left: -100px;
+    transform: scaleX(1); /* Normal */
+  }
+  50% {
+    left: 100%; 
+    transform: scaleX(1); /* Moving right */
+  }
+  51% {
+    transform: scaleX(-1); /* Flip bus to face left */
+  }
+  100% {
+    left: -100px; 
+    transform: scaleX(-1); /* Moving back left */
+  }
+}
 
-    /* How It Works Section */
-    .how-it-works {
+ .how-it-works {
       background: rgba(0,0,0,0.3);
       padding: 40px 20px;
       border-radius: 15px;
@@ -150,8 +170,9 @@
       margin: auto;
     }
     .steps {
-      display: grid; /* Changed to grid for better control */
-      grid-template-columns: repeat(3, 1fr);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
       gap: 30px;
       margin-top: 20px;
     }
@@ -159,234 +180,131 @@
       background: rgba(255,255,255,0.1);
       padding: 20px;
       border-radius: 12px;
-      /* Removed fixed width: width: 250px; */
+      width: 250px;
     }
-    
-    /* Footer */
+      /* Footer */
     footer {
-      background: #0d1117;
-      padding: 50px 20px 20px 20px;
-      color: #ccc;
-    }
+  background: #0d1117;
+  padding: 50px 20px 20px 20px;
+  color: #ccc;
+}
 
-    .footer-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 40px;
-      max-width: 1200px;
-      margin: auto;
-      text-align: left; /* Aligned content left for better readability on smaller sections */
-    }
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 40px;
+  max-width: 1200px;
+  margin: auto;
+}
 
-    .footer-logo p { font-size: 0.9rem; color: #aaa; }
+.footer-logo img {
+  width: 130px;
+  margin-bottom: 10px;
+}
 
-    .footer-links ul { list-style: none; padding: 0; }
-    .footer-links ul li { margin: 10px 0; }
-    .footer-links ul li a {
-      text-decoration: none;
-      color: #ccc;
-      transition: 0.3s;
-    }
-    .footer-links ul li a:hover { color: #00c6ff; }
+.footer-logo p { font-size: 0.9rem; color: #aaa; }
 
-    .footer-social .social-icons a {
-      font-size: 1.5rem;
-      margin-right: 15px;
-      color: #aaa;
-      transition: 0.3s;
-    }
-    .footer-social .social-icons a:hover { color: #00c6ff; }
+.footer-links ul { list-style: none; padding: 0; }
+.footer-links ul li { margin: 10px 0; }
+.footer-links ul li a {
+  text-decoration: none;
+  color: #ccc;
+  transition: 0.3s;
+}
+.footer-links ul li a:hover { color: #00c6ff; }
 
-    .newsletter input {
-      padding: 10px;
-      width: 80%;
-      border: none;
-      border-radius: 5px;
-      margin-bottom: 10px;
-    }
-    .newsletter button {
-      padding: 10px 16px;
-      border: none;
-      border-radius: 5px;
-      background: #00c6ff;
-      color: white;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    .newsletter button:hover { background: #0072ff; }
+.footer-social .social-icons a {
+  font-size: 1.5rem;
+  margin-right: 15px;
+  color: #aaa;
+  transition: 0.3s;
+}
+.footer-social .social-icons a:hover { color: #00c6ff; }
 
-    .message { font-size: 0.9rem; margin-top: 5px; }
+.newsletter input {
+  padding: 10px;
+  width: 80%;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+.newsletter button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 5px;
+  background: #00c6ff;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.newsletter button:hover { background: #0072ff; }
 
-    .footer-bottom {
-      margin-top: 30px;
-      text-align: center;
-      padding-top: 15px;
-      border-top: 1px solid #333;
-      font-size: 0.85rem;
-      color: #777;
-    }
+.message { font-size: 0.9rem; margin-top: 5px; }
 
-    /* Banner */
-    #tg-cookie-banner {
-      position: fixed;
-      left: 20px;
-      right: 20px;
-      bottom: 20px;
-      z-index: 9999;
-      background: rgba(13,17,23,0.9);
-      color: #e6eef9;
-      padding: 18px;
-      border-radius: 12px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
-      display: none;
-      backdrop-filter: blur(6px);
-      font-family: 'Poppins', sans-serif;
-    }
-    #tg-cookie-banner .tg-row { display:flex; gap:16px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
-    #tg-cookie-banner .tg-left { max-width: 75%; min-width: 220px; }
-    #tg-cookie-banner h4 { margin:0 0 6px 0; color:#00c6ff; font-size:1rem; }
-    #tg-cookie-banner p { margin:0; font-size:0.95rem; color:#d0dbe8; opacity:0.95; }
-    #tg-cookie-actions { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
-    .tg-btn {
-      padding:10px 16px; border-radius:10px; border:none; cursor:pointer; font-weight:600;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.4);
-    }
-    .tg-accept { background: linear-gradient(90deg,#00c6ff,#0072ff); color:#fff; }
-    .tg-reject { background: transparent; color:#cfe8ff; border:1px solid rgba(255,255,255,0.08); }
-    .tg-manage { background: rgba(255,255,255,0.04); color:#dbefff; border:1px solid rgba(255,255,255,0.06); }
+.footer-bottom {
+  margin-top: 30px;
+  text-align: center;
+  padding-top: 15px;
+  border-top: 1px solid #333;
+  font-size: 0.85rem;
+  color: #777;
+}
 
-    /* Modal */
-    #tg-cookie-modal {
-      position: fixed; inset: 0; display:none; z-index:10000;
-      align-items:center; justify-content:center; padding:20px;
-    }
-    #tg-cookie-modal .overlay { position:absolute; inset:0; background:rgba(0,0,0,0.6); backdrop-filter: blur(3px); }
-    #tg-cookie-modal .modal-card {
-      position:relative; z-index:10001; width:100%; max-width:780px; border-radius:14px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
-      padding:24px; box-shadow:0 12px 40px rgba(2,6,23,0.7); color:#e8f3ff;
-    }
-    .modal-card h3 { margin:0 0 8px; color:#00c6ff; }
-    .cookie-category { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 0; border-bottom:1px dashed rgba(255,255,255,0.03); }
-    .cookie-category p { margin:0; color:#cfe8ff; font-size:0.95rem; }
-    .toggle { width:48px; height:28px; background:#213040; border-radius:20px; position:relative; cursor:pointer; transition:background .2s; border:1px solid rgba(255,255,255,0.04); }
-    .toggle.on { background: linear-gradient(90deg,#00c6ff,#0072ff); box-shadow: 0 6px 16px rgba(0,198,255,0.18); }
-    .toggle .knob { position:absolute; top:3px; left:3px; width:22px; height:22px; background:#fff; border-radius:50%; transition:left .18s; }
-    .toggle.on .knob { left:23px; background:#fff; }
+  /* Banner */
+  #tg-cookie-banner {
+    position: fixed;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    z-index: 9999;
+    background: rgba(13,17,23,0.9);
+    color: #e6eef9;
+    padding: 18px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+    display: none;
+    backdrop-filter: blur(6px);
+    font-family: 'Poppins', sans-serif;
+  }
+  #tg-cookie-banner .tg-row { display:flex; gap:16px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
+  #tg-cookie-banner .tg-left { max-width: 75%; min-width: 220px; }
+  #tg-cookie-banner h4 { margin:0 0 6px 0; color:#00c6ff; font-size:1rem; }
+  #tg-cookie-banner p { margin:0; font-size:0.95rem; color:#d0dbe8; opacity:0.95; }
+  #tg-cookie-actions { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+  .tg-btn {
+    padding:10px 16px; border-radius:10px; border:none; cursor:pointer; font-weight:600;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+  }
+  .tg-accept { background: linear-gradient(90deg,#00c6ff,#0072ff); color:#fff; }
+  .tg-reject { background: transparent; color:#cfe8ff; border:1px solid rgba(255,255,255,0.08); }
+  .tg-manage { background: rgba(255,255,255,0.04); color:#dbefff; border:1px solid rgba(255,255,255,0.06); }
 
-    .modal-actions { display:flex; gap:12px; justify-content:flex-end; margin-top:18px; }
-    .tg-secondary { background:transparent; border:1px solid rgba(255,255,255,0.06); color:#dbefff; padding:10px 14px; border-radius:10px; cursor:pointer; }
-    .tg-primary { background: linear-gradient(90deg,#00c6ff,#0072ff); color:#fff; padding:10px 14px; border-radius:10px; cursor:pointer; }
-    .cookie-manage-link { color:#9fd9ff; text-decoration:underline; cursor:pointer; }
+  /* Modal */
+  #tg-cookie-modal {
+    position: fixed; inset: 0; display:none; z-index:10000;
+    align-items:center; justify-content:center; padding:20px;
+  }
+  #tg-cookie-modal .overlay { position:absolute; inset:0; background:rgba(0,0,0,0.6); backdrop-filter: blur(3px); }
+  #tg-cookie-modal .modal-card {
+    position:relative; z-index:10001; width:100%; max-width:780px; border-radius:14px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+    padding:24px; box-shadow:0 12px 40px rgba(2,6,23,0.7); color:#e8f3ff;
+  }
+  .modal-card h3 { margin:0 0 8px; color:#00c6ff; }
+  .cookie-category { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 0; border-bottom:1px dashed rgba(255,255,255,0.03); }
+  .cookie-category p { margin:0; color:#cfe8ff; font-size:0.95rem; }
+  .toggle { width:48px; height:28px; background:#213040; border-radius:20px; position:relative; cursor:pointer; transition:background .2s; border:1px solid rgba(255,255,255,0.04); }
+  .toggle.on { background: linear-gradient(90deg,#00c6ff,#0072ff); box-shadow: 0 6px 16px rgba(0,198,255,0.18); }
+  .toggle .knob { position:absolute; top:3px; left:3px; width:22px; height:22px; background:#fff; border-radius:50%; transition:left .18s; }
+  .toggle.on .knob { left:23px; background:#fff; }
 
-    /* =================================
-          MEDIA QUERIES FOR RESPONSIVENESS
-        ================================= */
-
-    /* Tablet (Max width 900px) */
-    @media (max-width: 900px) {
-      .features {
-        grid-template-columns: repeat(2, 1fr); /* 2 per row on tablet */
-      }
-      .steps {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Allow steps to wrap */
-      }
-    }
-
-    /* Mobile (Max width 600px) */
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 2.2rem;
-      }
-      p {
-        font-size: 1rem;
-        margin-bottom: 20px;
-      }
-      .btn-container {
-        flex-direction: column; /* Stack buttons vertically */
-        gap: 10px;
-      }
-      .btn {
-        width: 100%;
-        padding: 10px;
-      }
-      section {
-        margin: 30px auto;
-        padding: 0 15px;
-      }
-      h2 {
-        font-size: 1.8rem;
-      }
-      .features, .steps {
-        grid-template-columns: 1fr; /* 1 per row on mobile */
-      }
-      
-      /* Bus Animation - disable on mobile to prevent overflow */
-      .bus-animation {
-        display: none;
-      }
-
-      /* Footer Improvements */
-      .footer-container {
-        grid-template-columns: 1fr;
-        text-align: center; /* Center footer columns */
-      }
-      .footer-logo, .footer-links, .footer-social, .newsletter {
-        text-align: center;
-      }
-      .newsletter input {
-        width: 90%;
-      }
-      .footer-links ul {
-        text-align: center;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      .footer-links ul li {
-        width: 50%; /* Make links wrap better */
-        margin: 5px 0;
-      }
-      .footer-social .social-icons {
-        text-align: center;
-      }
-
-      /* Cookie Modal/Banner */
-      #tg-cookie-banner .tg-row {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      #tg-cookie-banner .tg-left {
-        max-width: 100%;
-        min-width: auto;
-        margin-bottom: 10px;
-      }
-      #tg-cookie-actions {
-        flex-wrap: wrap;
-        justify-content: space-around;
-        width: 100%;
-      }
-      #tg-cookie-actions .tg-btn {
-        flex-grow: 1; /* Make buttons expand */
-      }
-      .modal-actions {
-        flex-direction: column;
-        gap: 10px;
-      }
-      .modal-actions button {
-        width: 100%;
-      }
-    }
-
-    /* Extra Small Screens (Max width 350px) */
-    @media (max-width: 350px) {
-      h1 {
-        font-size: 1.8rem;
-      }
-      .footer-links ul li {
-        width: 100%;
-      }
-    }
+  .modal-actions { display:flex; gap:12px; justify-content:flex-end; margin-top:18px; }
+  .tg-secondary { background:transparent; border:1px solid rgba(255,255,255,0.06); color:#dbefff; padding:10px 14px; border-radius:10px; cursor:pointer; }
+  .tg-primary { background: linear-gradient(90deg,#00c6ff,#0072ff); color:#fff; padding:10px 14px; border-radius:10px; cursor:pointer; }
+  .cookie-manage-link { color:#9fd9ff; text-decoration:underline; cursor:pointer; }
+  @media (max-width:700px) {
+    #tg-cookie-banner .tg-left { max-width: 100%; }
+    #tg-cookie-banner { padding:14px; left:12px; right:12px; bottom:12px;}}
   </style>
 </head>
 <body>
@@ -402,11 +320,13 @@
     <button class="btn" onclick="location.href='signup.html'">Sign Up</button>
   </div>
 
-    <div class="hero">
+  <!-- Hero Illustration (optional) -->
+  <div class="hero">
 <div class="bus-animation">🚍</div>
   </div>
 
-    <section>
+  <!-- Features -->
+  <section>
     <h2>Why Choose TransitGo?</h2>
     <div class="features">
       <div class="card">
@@ -453,7 +373,8 @@
       </div>
     </div>
   </section>
-  <div id="tg-cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie consent">
+  <!-- ====== COOKIE CONSENT (HTML part) ====== -->
+<div id="tg-cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie consent">
   <div class="tg-row">
     <div class="tg-left">
       <h4>We use cookies to improve your experience</h4>
@@ -467,13 +388,15 @@
   </div>
 </div>
 
+<!-- Modal -->
 <div id="tg-cookie-modal" aria-hidden="true">
   <div class="overlay" onclick="closeCookieModal()"></div>
   <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="tg-modal-title">
     <h3 id="tg-modal-title">Cookie Settings</h3>
     <p style="color:#cfe8ff; margin:8px 0 18px;">Choose which cookies you allow. You can change these later via the "Cookie Settings" link in the footer.</p>
 
-        <div class="cookie-category">
+    <!-- Essential (locked) -->
+    <div class="cookie-category">
       <div>
         <strong>Essential Cookies</strong>
         <p>Required for login, security and core functions. Always active.</p>
@@ -483,7 +406,8 @@
       </div>
     </div>
 
-        <div class="cookie-category">
+    <!-- Analytics -->
+    <div class="cookie-category">
       <div>
         <strong>Analytics Cookies</strong>
         <p>Help us understand how the site is used — anonymous and aggregated.</p>
@@ -493,7 +417,8 @@
       </div>
     </div>
 
-        <div class="cookie-category">
+    <!-- Preferences -->
+    <div class="cookie-category">
       <div>
         <strong>Preference Cookies</strong>
         <p>Save language, region and other UI preferences to improve your experience.</p>
@@ -509,14 +434,19 @@
     </div>
   </div>
 </div>
-    <footer>
+<!-- ====== END COOKIE CONSENT (HTML part) ====== -->
+
+  <!-- Footer -->
+  <footer>
   <div class="footer-container">
-        <div class="footer-logo">
+    <!-- Logo & About -->
+    <div class="footer-logo">
       <img src="./images/logo.png" alt="TransitGo Logo">
       <p>TransitGo makes your bus journey smarter, safer, and easier.</p>
     </div>
 
-       <div class="footer-links">
+   <!-- Quick Links -->
+    <div class="footer-links">
       <h3>Quick Links</h3>
       <ul>
         <li><a href="index.html">Home</a></li>
@@ -533,7 +463,8 @@
       </ul>
     </div>
 
-        <div class="footer-social">
+    <!-- Social Media -->
+    <div class="footer-social">
       <h3>Follow Us</h3>
       <div class="social-icons">
         <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -543,7 +474,8 @@
       </div>
     </div>
 
-        <div class="newsletter">
+    <!-- Newsletter -->
+    <div class="newsletter">
       <h3>Newsletter</h3>
       <form onsubmit="subscribe(event)">
         <input type="email" id="email" placeholder="Enter your email" required>
