@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact Us - TransitGo</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="icon" href="./images/logo.png">
   <style>
     body {
@@ -24,10 +23,6 @@
       margin: 50px 0 10px;
       color: #00c6ff;
       letter-spacing: 1px;
-    }
-
-    .content-wrapper {
-      flex-grow: 1; /* Allows the content to push the footer down */
     }
 
     .contact-container {
@@ -95,7 +90,6 @@
       color: #fff;
       font-size: 1rem;
       outline: none;
-      resize: vertical;
     }
     .form-group label {
       position: absolute;
@@ -134,12 +128,11 @@
       margin-top: 15px;
       font-size: 0.95rem;
     }
-        /* Footer */
+        /* Footer (reuse your existing one) */
     footer {
       background: #0d1117;
       padding: 50px 20px 20px 20px;
       color: #ccc;
-      margin-top: 40px; /* Separator from main content */
     }
     .footer-container {
       display: grid;
@@ -150,14 +143,13 @@
     }
     .footer-logo img { width: 130px; margin-bottom: 10px; }
     .footer-logo p { font-size: 0.9rem; color: #aaa; }
-    .footer-links h3, .footer-social h3, .newsletter h3 { color: #00c6ff; margin-bottom: 15px; }
     .footer-links ul { list-style: none; padding: 0; }
     .footer-links ul li { margin: 10px 0; }
     .footer-links ul li a { text-decoration: none; color: #ccc; transition: 0.3s; }
     .footer-links ul li a:hover { color: #00c6ff; }
     .footer-social .social-icons a { font-size: 1.5rem; margin-right: 15px; color: #aaa; transition: 0.3s; }
     .footer-social .social-icons a:hover { color: #00c6ff; }
-    .newsletter input { padding: 10px; width: calc(80% - 20px); border: none; border-radius: 5px; margin-bottom: 10px; color: #0d1117; }
+    .newsletter input { padding: 10px; width: 80%; border: none; border-radius: 5px; margin-bottom: 10px; }
     .newsletter button { padding: 10px 16px; border: none; border-radius: 5px; background: #00c6ff; color: white; cursor: pointer; transition: 0.3s; }
     .newsletter button:hover { background: #0072ff; }
     .message { font-size: 0.9rem; margin-top: 5px; }
@@ -212,29 +204,24 @@
   .toggle.on { background: linear-gradient(90deg,#00c6ff,#0072ff); box-shadow: 0 6px 16px rgba(0,198,255,0.18); }
   .toggle .knob { position:absolute; top:3px; left:3px; width:22px; height:22px; background:#fff; border-radius:50%; transition:left .18s; }
   .toggle.on .knob { left:23px; background:#fff; }
-  .toggle.locked { background: #333; cursor: default; } /* Style for locked toggle */
-  .toggle.locked .knob { background: #bbb; }
-
 
   .modal-actions { display:flex; gap:12px; justify-content:flex-end; margin-top:18px; }
   .tg-secondary { background:transparent; border:1px solid rgba(255,255,255,0.06); color:#dbefff; padding:10px 14px; border-radius:10px; cursor:pointer; }
   .tg-primary { background: linear-gradient(90deg,#00c6ff,#0072ff); color:#fff; padding:10px 14px; border-radius:10px; cursor:pointer; }
   .cookie-manage-link { color:#9fd9ff; text-decoration:underline; cursor:pointer; }
   @media (max-width:700px) {
-    .contact-container { grid-template-columns: 1fr; }
     #tg-cookie-banner .tg-left { max-width: 100%; }
-    #tg-cookie-banner { padding:14px; left:12px; right:12px; bottom:12px;}
-    .footer-links ul { columns: 2; -webkit-columns: 2; -moz-columns: 2; }
-  }
+    #tg-cookie-banner { padding:14px; left:12px; right:12px; bottom:12px;}}
   </style>
 </head>
 <body>
-<div class="content-wrapper">
+
   <h1>Contact <span style="color:#fff;">Us</span></h1>
 
   <div class="contact-container">
 
-        <div class="contact-info">
+    <!-- Contact Info -->
+    <div class="contact-info">
       <h2>Get in Touch</h2>
       <div class="info-item"><div class="icon-circle"><i class="fas fa-map-marker-alt"></i></div> 123 TransitGo Street, Chennai, India</div>
       <div class="info-item"><div class="icon-circle"><i class="fas fa-phone"></i></div> +91 98765 43210</div>
@@ -242,7 +229,8 @@
       <div class="info-item"><div class="icon-circle"><i class="fas fa-clock"></i></div> Mon - Sat: 9:00 AM - 7:00 PM</div>
     </div>
 
-        <div class="contact-form">
+    <!-- Contact Form -->
+    <div class="contact-form">
       <h2>Send a Message</h2>
       <form onsubmit="sendMessage(event)">
         <div class="form-group">
@@ -250,8 +238,8 @@
           <label for="name">Your Name</label>
         </div>
         <div class="form-group">
-          <input type="email" id="email_form" required>
-          <label for="email_form">Your Email</label>
+          <input type="email" id="email" required>
+          <label for="email">Your Email</label>
         </div>
         <div class="form-group">
           <textarea id="message" rows="5" required></textarea>
@@ -262,8 +250,9 @@
       </form>
     </div>
   </div>
-</div>
-  <div id="tg-cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie consent">
+
+  <!-- ====== COOKIE CONSENT (HTML part) ====== -->
+<div id="tg-cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie consent">
   <div class="tg-row">
     <div class="tg-left">
       <h4>We use cookies to improve your experience</h4>
@@ -277,23 +266,26 @@
   </div>
 </div>
 
+<!-- Modal -->
 <div id="tg-cookie-modal" aria-hidden="true">
   <div class="overlay" onclick="closeCookieModal()"></div>
   <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="tg-modal-title">
     <h3 id="tg-modal-title">Cookie Settings</h3>
     <p style="color:#cfe8ff; margin:8px 0 18px;">Choose which cookies you allow. You can change these later via the "Cookie Settings" link in the footer.</p>
 
-        <div class="cookie-category">
+    <!-- Essential (locked) -->
+    <div class="cookie-category">
       <div>
         <strong>Essential Cookies</strong>
         <p>Required for login, security and core functions. Always active.</p>
       </div>
       <div style="display:flex; align-items:center; gap:10px;">
-        <div class="toggle on locked" id="toggle-essential" data-key="essential"><div class="knob"></div></div>
+        <div class="toggle on" data-key="essential"><div class="knob"></div></div>
       </div>
     </div>
 
-        <div class="cookie-category">
+    <!-- Analytics -->
+    <div class="cookie-category">
       <div>
         <strong>Analytics Cookies</strong>
         <p>Help us understand how the site is used — anonymous and aggregated.</p>
@@ -303,7 +295,8 @@
       </div>
     </div>
 
-        <div class="cookie-category">
+    <!-- Preferences -->
+    <div class="cookie-category">
       <div>
         <strong>Preference Cookies</strong>
         <p>Save language, region and other UI preferences to improve your experience.</p>
@@ -319,7 +312,10 @@
     </div>
   </div>
 </div>
-    <footer>
+<!-- ====== END COOKIE CONSENT (HTML part) ====== -->
+
+  <!-- Footer -->
+  <footer>
     <div class="footer-container">
       <div class="footer-logo">
         <img src="./images/logo.png" alt="TransitGo Logo">
@@ -333,9 +329,9 @@
         <li><a href="features.html">Features</a></li>
         <li><a href="contact.html">Contact</a></li>
         <li><a href="privacy.html">Privacy Policy</a></li>
-        <li><a href="terms.html">Terms & Conditions</a></li>
-        <li><a href="faq.html">Frequently Asked Questions</a></li>
-        <li><a href="services.html">Services</a></li>
+      <li><a href="terms.html">Terms & Conditions</a></li>
+       <li><a href="faq.html">Frequently Asked Questions</a></li>
+          <li><a href="services.html">Services</a></li>
         <li><a href="download.html">Download / App</a></li>
 
         </ul>
@@ -352,7 +348,7 @@
       <div class="newsletter">
         <h3>Newsletter</h3>
         <form onsubmit="subscribe(event)">
-          <input type="email" id="email_subscribe" placeholder="Enter your email" required>
+          <input type="email" id="email" placeholder="Enter your email" required>
           <button type="submit">Subscribe</button>
           <p id="message" class="message"></p>
         </form>
@@ -364,29 +360,15 @@
   </footer>
 
   <script>
-    // Small fix: Renamed the email IDs to avoid conflict between contact form and newsletter
-    // The HTML already had an ID conflict, so I renamed the newsletter's input to 'email_subscribe' 
-    // and the form's input to 'email_form'.
-
-    function sendMessage(event) {
-      event.preventDefault();
-      document.getElementById("form-message").style.color = "lightgreen";
-      document.getElementById("form-message").innerText = "✅ Your message has been sent successfully!";
-      // Clear form fields
-      document.getElementById("name").value = "";
-      document.getElementById("email_form").value = "";
-      document.getElementById("message").value = "";
-    }
-
     function subscribe(event) {
       event.preventDefault();
-      let email = document.getElementById("email_subscribe").value.trim();
+      let email = document.getElementById("email").value.trim();
       let message = document.getElementById("message");
       let regex = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
       if(regex.test(email)) {
         message.style.color = "lightgreen";
         message.innerText = "✅ Thank you for subscribing!";
-        document.getElementById("email_subscribe").value = "";
+        document.getElementById("email").value = "";
       } else {
         message.style.color = "red";
         message.innerText = "❌ Please enter a valid email.";
@@ -399,7 +381,6 @@
   const acceptBtn = document.getElementById('tg-accept-btn');
   const rejectBtn = document.getElementById('tg-reject-btn');
   const manageBtn = document.getElementById('tg-manage-btn');
-  const toggleEssential = document.getElementById('toggle-essential');
   const toggleAnalytics = document.getElementById('toggle-analytics');
   const togglePrefs = document.getElementById('toggle-preferences');
 
@@ -416,19 +397,22 @@
   }
 
   function applyPreferences(state) {
-    // These are dummy functions for demonstration
-    if(state.analytics) console.log('Analytics enabled'); else console.log('Analytics disabled');
-    if(state.preferences) console.log('Preferences enabled'); else console.log('Preferences disabled');
+    if(state.analytics) enableAnalytics(); else disableAnalytics();
+    if(state.preferences) applyPreferenceCookies(); else removePreferenceCookies();
   }
 
+  window.enableAnalytics = function(){ console.log('Analytics enabled'); }
+  window.disableAnalytics = function(){ console.log('Analytics disabled'); }
+  window.applyPreferenceCookies = function(){ console.log('Preferences enabled'); }
+  window.removePreferenceCookies = function(){ console.log('Preferences disabled'); }
+
   function setToggleUI(el, on){
-    if(!el || el.classList.contains('locked')) return; // Ignore locked toggles
+    if(!el) return;
     if(on) el.classList.add('on'); else el.classList.remove('on');
     el.setAttribute('aria-pressed', on ? 'true' : 'false');
   }
 
   function initToggles(state){
-    // Essential is always on and locked, so only initialize optional toggles
     setToggleUI(toggleAnalytics, !!state.analytics);
     setToggleUI(togglePrefs, !!state.preferences);
   }
@@ -446,18 +430,10 @@
 
   manageBtn.addEventListener('click', function(){ openCookieModal(); });
 
-  // Add click listeners for optional toggles, skipping the essential one
   [toggleAnalytics, togglePrefs].forEach(toggle => {
     if(!toggle) return;
     toggle.addEventListener('click', function(){ setToggleUI(toggle, !toggle.classList.contains('on')); });
   });
-  
-  // Ensure essential toggle is locked and not clickable
-  if (toggleEssential) {
-    toggleEssential.classList.add('locked');
-    toggleEssential.addEventListener('click', (e) => e.preventDefault());
-  }
-
 
   window.openCookieModal = function(){
     modal.style.display='flex'; modal.setAttribute('aria-hidden','false');
@@ -467,36 +443,43 @@
 
   window.saveCookiePreferences = function(){
     const state = {
-      essential: true, // Always true
+      essential: true,
       analytics: toggleAnalytics.classList.contains('on'),
       preferences: togglePrefs.classList.contains('on'),
     };
     saveState(state); applyPreferences(state); closeCookieModal(); banner.style.display='none';
-    setTimeout(()=>alert('Cookie preferences saved. Check the console for applied settings.'), 250);
+    setTimeout(()=>alert('Cookie preferences saved.'), 250);
   }
 
   window.rejectAllCookies = function(){
     const state = { essential:true, analytics:false, preferences:false };
     saveState(state); applyPreferences(state); closeCookieModal(); banner.style.display='none';
-    setTimeout(()=>alert('All non-essential cookies rejected. Check the console for applied settings.'), 250);
   }
 
   window.openCookieSettings = openCookieModal;
 
-  // Add Cookie Settings link to footer
+  // Add small footer manage link if not present
   (function(){
     try {
-      const footSocial = document.querySelector('.footer-social');
-      if(footSocial && !footSocial.querySelector('.cookie-manage-link')){
+      const foot = document.querySelector('footer');
+      if(foot && !foot.querySelector('.cookie-manage-link')){
         const el = document.createElement('div');
-        el.style.marginTop='10px';
+        el.style.marginTop='8px';
         el.innerHTML='<a class="cookie-manage-link" onclick="openCookieSettings()">Cookie Settings</a>';
-        footSocial.appendChild(el);
+        foot.appendChild(el);
       }
     } catch(e){}
   })();
 
 })();
+  </script>
+  <script>
+    function sendMessage(event) {
+      event.preventDefault();
+      document.getElementById("form-message").style.color = "lightgreen";
+      document.getElementById("form-message").innerText = "✅ Your message has been sent successfully!";
+      event.target.reset();
+    }
   </script>
 
 </body>
