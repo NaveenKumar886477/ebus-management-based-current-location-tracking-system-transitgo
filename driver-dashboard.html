@@ -1,226 +1,271 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Driver Dashboard | TransitGo</title>
-    <link rel="icon" href="./images/logo.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Dashboard | TransitGo</title>
+    <link rel="icon" href="./images/logo.png">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary-color: #007bff;
-            --success-color: #28a745;
-            --warning-color: #ffc107;
-            --danger-color: #dc3545;
-            --dark-color: #343a40;
-            --light-color: #f8f9fa;
-            --card-bg: #ffffff;
-            --container-bg: #ffffff;
-        }
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --dark-color: #343a40;
+            --light-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --container-bg: #ffffff;
+        }
 
-        body {
-            background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0;
-        }
+        body {
+            background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
 
-        .dashboard-container {
-            max-width: 900px;
-            width: 95%;
-            padding: 30px;
-            background: var(--container-bg);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 0.8s ease-in-out;
-        }
+        .dashboard-container {
+            max-width: 900px;
+            width: 95%;
+            padding: 30px;
+            background: var(--container-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.8s ease-in-out;
+        }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-        .dashboard-header {
-            text-align: center;
-            margin-bottom: 40px;
-            color: var(--dark-color);
-        }
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--dark-color);
+        }
 
-        .dashboard-header h2 {
-            font-weight: 700;
-            color: var(--primary-color);
-        }
+        .dashboard-header h2 {
+            font-weight: 700;
+            color: var(--primary-color);
+        }
 
-        .dashboard-header p {
-            color: #6c757d;
-            font-size: 1.1rem;
-        }
+        .dashboard-header p {
+            color: #6c757d;
+            font-size: 1.1rem;
+        }
 
-        .card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
 
-        .card-body {
-            padding: 2rem;
-        }
+        .card-body {
+            padding: 2rem;
+        }
 
-        .card h5 {
-            color: var(--dark-color);
-            font-weight: 600;
-        }
+        .card h5 {
+            color: var(--dark-color);
+            font-weight: 600;
+        }
 
-        .card p {
-            color: #6c757d;
-        }
+        .card p {
+            color: #6c757d;
+        }
 
-        .btn-primary {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-            transition: background-color 0.3s, transform 0.2s;
-        }
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
-            transform: scale(1.02);
-        }
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+            transform: scale(1.02);
+        }
 
-        .btn-success {
-            background-color: var(--success-color);
-            border-color: var(--success-color);
-            transition: background-color 0.3s, transform 0.2s;
-        }
-        .btn-success:hover {
-            background-color: #1e7e34;
-            border-color: #1e7e34;
-            transform: scale(1.02);
-        }
+        .btn-success {
+            background-color: var(--success-color);
+            border-color: var(--success-color);
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .btn-success:hover {
+            background-color: #1e7e34;
+            border-color: #1e7e34;
+            transform: scale(1.02);
+        }
 
-        .btn-warning {
-            background-color: var(--warning-color);
-            border-color: var(--warning-color);
-            color: var(--dark-color);
-            transition: background-color 0.3s, transform 0.2s;
-        }
-        .btn-warning:hover {
-            background-color: #e0a800;
-            border-color: #e0a800;
-            transform: scale(1.02);
-        }
+        .btn-warning {
+            background-color: var(--warning-color);
+            border-color: var(--warning-color);
+            color: var(--dark-color);
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .btn-warning:hover {
+            background-color: #e0a800;
+            border-color: #e0a800;
+            transform: scale(1.02);
+        }
 
-        .btn-danger {
-            background-color: var(--danger-color);
-            border-color: var(--danger-color);
-            transition: background-color 0.3s, transform 0.2s;
-        }
-        .btn-danger:hover {
-            background-color: #bd2130;
-            border-color: #bd2130;
-            transform: scale(1.02);
-        }
+        .btn-danger {
+            background-color: var(--danger-color);
+            border-color: var(--danger-color);
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .btn-danger:hover {
+            background-color: #bd2130;
+            border-color: #bd2130;
+            transform: scale(1.02);
+        }
 
-        .btn-outline-dark {
-            border-color: var(--dark-color);
-            color: var(--dark-color);
-            transition: all 0.3s;
-        }
-        .btn-outline-dark:hover {
-            background-color: var(--dark-color);
-            color: white;
-            transform: scale(1.02);
-        }
-        
-   
-    </style>
+        .btn-outline-dark {
+            border-color: var(--dark-color);
+            color: var(--dark-color);
+            transition: all 0.3s;
+        }
+        .btn-outline-dark:hover {
+            background-color: var(--dark-color);
+            color: white;
+            transform: scale(1.02);
+        }
+
+        /* =========================== */
+        /* == MEDIA QUERIES SECTION == */
+        /* =========================== */
+
+        /* Small Devices (Max 576px - Mobile) */
+        @media (max-width: 576px) {
+            /* Reduce container padding and make it full width */
+            .dashboard-container {
+                width: 100%;
+                padding: 20px;
+                border-radius: 0;
+                box-shadow: none; /* Remove box shadow to make it look part of the body */
+            }
+            
+            /* Adjust header text size */
+            .dashboard-header h2 {
+                font-size: 1.5rem;
+            }
+            .dashboard-header p {
+                font-size: 0.9rem;
+            }
+
+            /* Reduce card padding for compact look */
+            .card-body {
+                padding: 1.5rem;
+            }
+            .card h5 {
+                font-size: 1.1rem;
+            }
+
+            /* Make buttons full width when stacked */
+            .text-center .btn {
+                width: 100%;
+                margin-bottom: 10px;
+                margin-right: 0 !important;
+            }
+        }
+
+        /* Very Large Screens (Min 1200px - Optional) */
+        @media (min-width: 1200px) {
+            /* Re-center body on very large screens */
+            body {
+                padding: 50px 0;
+                align-items: flex-start; /* Prevent body from being overly stretched vertically */
+            }
+        }
+    </style>
 </head>
 <body>
 
-    <div class="dashboard-container">
-        <div class="dashboard-header">
-            <h2>🚍 TransitGo - Driver Dashboard</h2>
-            <p>Welcome, <b id="driverNamePlaceholder">Driver</b>. Manage your bus details below.</p>
-        </div>
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h2>🚍 TransitGo - Driver Dashboard</h2>
+            <p>Welcome, <b id="driverNamePlaceholder">Driver</b>. Manage your bus details below.</p>
+        </div>
 
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card text-center h-100">
-                    <div class="card-body">
-                        <i class="fas fa-bus-alt fa-3x text-primary mb-3"></i>
-                        <h5>Post Bus Information</h5>
-                        <p>Enter and update your bus details.</p>
-                        <a href="post-bus-info.html" class="btn btn-primary mt-auto">Enter Info</a>
-                    </div>
-                </div>
-            </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-bus-alt fa-3x text-primary mb-3"></i>
+                        <h5>Post Bus Information</h5>
+                        <p>Enter and update your bus details.</p>
+                        <a href="post-bus-info.html" class="btn btn-primary mt-auto">Enter Info</a>
+                    </div>
+                </div>
+            </div>
 
-            <div class="col-md-4">
-                <div class="card text-center h-100">
-                    <div class="card-body">
-                        <i class="fas fa-tags fa-3x text-success mb-3"></i>
-                        <h5>Post Bus Type</h5>
-                        <p>Specify whether your bus is AC, Non-AC, Sleeper, etc.</p>
-                        <a href="post-bus-type.html" class="btn btn-success mt-auto">Select Type</a>
-                    </div>
-                </div>
-            </div>
+            <div class="col-md-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-tags fa-3x text-success mb-3"></i>
+                        <h5>Post Bus Type</h5>
+                        <p>Specify whether your bus is AC, Non-AC, Sleeper, etc.</p>
+                        <a href="post-bus-type.html" class="btn btn-success mt-auto">Select Type</a>
+                    </div>
+                </div>
+            </div>
 
-            <div class="col-md-4">
-                <div class="card text-center h-100">
-                    <div class="card-body">
-                        <i class="fas fa-phone-alt fa-3x text-warning mb-3"></i>
-                        <h5>Post Contact</h5>
-                        <p>Update your travel/driver contact details.</p>
-                        <a href="post-contact.html" class="btn btn-warning mt-auto">Add Contact</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+            <div class="col-md-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-phone-alt fa-3x text-warning mb-3"></i>
+                        <h5>Post Contact</h5>
+                        <p>Update your travel/driver contact details.</p>
+                        <a href="post-contact.html" class="btn btn-warning mt-auto">Add Contact</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <hr class="my-5">
+        <hr class="my-5">
 
-        <div class="text-center">
-            <a href="profile.html" class="btn btn-outline-dark me-2">Profile</a>
-            <button id="logoutButton" class="btn btn-danger">Logout</button>
-        </div>
-    </div>
+        <div class="text-center">
+            <a href="profile.html" class="btn btn-outline-dark me-2">Profile</a>
+            <button id="logoutButton" class="btn btn-danger">Logout</button>
+        </div>
+    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-            if (!currentUser || currentUser.role !== "Driver") {
-                window.location.href = 'login.html';
-                return;
-            }
+            if (!currentUser || currentUser.role !== "Driver") {
+                window.location.href = 'login.html';
+                return;
+            }
 
-            const driverNameElement = document.getElementById('driverNamePlaceholder');
-            driverNameElement.textContent = currentUser.name;
-        });
+            const driverNameElement = document.getElementById('driverNamePlaceholder');
+            driverNameElement.textContent = currentUser.name;
+        });
 
-        document.getElementById('logoutButton').addEventListener('click', () => {
-            localStorage.removeItem('currentUser');
-            alert("You have been logged out.");
-            window.location.href = 'login.html';
-        });
-    </script>
+        document.getElementById('logoutButton').addEventListener('click', () => {
+            localStorage.removeItem('currentUser');
+            alert("You have been logged out.");
+            window.location.href = 'login.html';
+        });
+    </script>
 </body>
 </html>
