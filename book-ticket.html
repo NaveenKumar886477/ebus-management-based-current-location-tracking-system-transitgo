@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -30,73 +30,12 @@
     .input-group input, .input-group select {
       width: 100%; padding: 10px; border: none; border-radius: 8px; outline: none;
     }
-    /* Override default browser styles for date/time inputs */
-    .input-group input[type="date"],
-    .input-group input[type="time"] {
-      -webkit-appearance: none;
-      appearance: none;
-    }
     .btn {
       width: 100%; padding: 10px; border: none; border-radius: 8px;
       background: #00c6ff; color: white; font-size: 1rem; cursor: pointer;
-      transition: background 0.3s;
     }
     .btn:hover { background: #0072ff; }
-    a { color: #00c6ff; text-decoration: none; transition: color 0.3s; }
-    a:hover { color: #4dc2ff; }
-
-    /* =================================
-        MEDIA QUERIES FOR RESPONSIVENESS
-      ================================= */
-
-    /* 1. Tablet and Smaller Desktops (Max width 768px) */
-    @media (max-width: 768px) {
-      .container {
-        /* Increase width slightly for better use of tablet screen space */
-        width: 80%;
-        max-width: 450px;
-        padding: 25px;
-      }
-      h2 {
-        font-size: 1.8rem;
-      }
-    }
-
-    /* 2. Mobile Devices (Max width 480px) */
-    @media (max-width: 480px) {
-      body {
-        /* Ensure full-screen background on small devices */
-        align-items: flex-start; /* Start content from top, not center */
-        padding: 30px 15px;
-        min-height: 0; /* Allow body height to shrink if content is small */
-      }
-      .container {
-        /* Take up almost all available width with minimal padding */
-        width: 100%;
-        padding: 20px;
-        border-radius: 10px;
-        box-sizing: border-box; /* Include padding in the element's total width and height */
-        margin-top: 30px; /* Space from top */
-        margin-bottom: 30px;
-      }
-      h2 {
-        font-size: 1.5rem;
-        margin-bottom: 15px;
-      }
-      .input-group label {
-        font-size: 0.85rem;
-      }
-      .btn {
-        font-size: 0.95rem;
-        padding: 12px;
-      }
-      .input-group input, .input-group select {
-        padding: 12px;
-      }
-      p {
-        font-size: 0.9rem;
-      }
-    }
+    a { color: #00c6ff; text-decoration: none; }
   </style>
 </head>
 <body>
