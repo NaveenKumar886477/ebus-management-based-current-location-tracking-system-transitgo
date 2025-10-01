@@ -1,138 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Book Ticket - TransitGo</title>
-  <link rel="icon" href="./images/logo.png">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      color: #fff;
-    }
-    .container {
-      width: 400px;
-      background: rgba(255,255,255,0.1);
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-      text-align: center;
-    }
-    h2 { margin-bottom: 20px; color: #00c6ff; }
-    .input-group { margin-bottom: 15px; text-align: left; }
-    .input-group label { font-size: 0.9rem; display: block; margin-bottom: 5px; }
-    .input-group input, .input-group select {
-      width: 100%; padding: 10px; border: none; border-radius: 8px; outline: none;
-    }
-    .btn {
-      width: 100%; padding: 10px; border: none; border-radius: 8px;
-      background: #00c6ff; color: white; font-size: 1rem; cursor: pointer;
-    }
-    .btn:hover { background: #0072ff; }
-    a { color: #00c6ff; text-decoration: none; }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Ticket - TransitGo</title>
+  <link rel="icon" href="./images/logo.png">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #fff;
+    }
+    .container {
+      width: 400px;
+      background: rgba(255,255,255,0.1);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+      text-align: center;
+    }
+    h2 { margin-bottom: 20px; color: #00c6ff; }
+    .input-group { margin-bottom: 15px; text-align: left; }
+    .input-group label { font-size: 0.9rem; display: block; margin-bottom: 5px; }
+    .input-group input, .input-group select {
+      width: 100%; padding: 10px; border: none; border-radius: 8px; outline: none;
+    }
+    /* Override default browser styles for date/time inputs */
+    .input-group input[type="date"],
+    .input-group input[type="time"] {
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .btn {
+      width: 100%; padding: 10px; border: none; border-radius: 8px;
+      background: #00c6ff; color: white; font-size: 1rem; cursor: pointer;
+      transition: background 0.3s;
+    }
+    .btn:hover { background: #0072ff; }
+    a { color: #00c6ff; text-decoration: none; transition: color 0.3s; }
+    a:hover { color: #4dc2ff; }
+
+    /* =================================
+        MEDIA QUERIES FOR RESPONSIVENESS
+      ================================= */
+
+    /* 1. Tablet and Smaller Desktops (Max width 768px) */
+    @media (max-width: 768px) {
+      .container {
+        /* Increase width slightly for better use of tablet screen space */
+        width: 80%;
+        max-width: 450px;
+        padding: 25px;
+      }
+      h2 {
+        font-size: 1.8rem;
+      }
+    }
+
+    /* 2. Mobile Devices (Max width 480px) */
+    @media (max-width: 480px) {
+      body {
+        /* Ensure full-screen background on small devices */
+        align-items: flex-start; /* Start content from top, not center */
+        padding: 30px 15px;
+        min-height: 0; /* Allow body height to shrink if content is small */
+      }
+      .container {
+        /* Take up almost all available width with minimal padding */
+        width: 100%;
+        padding: 20px;
+        border-radius: 10px;
+        box-sizing: border-box; /* Include padding in the element's total width and height */
+        margin-top: 30px; /* Space from top */
+        margin-bottom: 30px;
+      }
+      h2 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+      }
+      .input-group label {
+        font-size: 0.85rem;
+      }
+      .btn {
+        font-size: 0.95rem;
+        padding: 12px;
+      }
+      .input-group input, .input-group select {
+        padding: 12px;
+      }
+      p {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
 <div class="container">
-  <h2>Book Ticket 🎟</h2>
-  <form id="bookingForm">
-    <div class="input-group">
-      <label>From</label>
-      <select id="from" required>
-        <option value="">Select Origin</option>
-        <option value="Chittoor">Chittoor</option>
-      </select>
-    </div>
-    <div class="input-group">
-      <label>To</label>
-      <select id="to" required>
-        <option value="">Select Destination</option>
-        <option value="Chennai">Chennai</option>
-        <option value="Vellore">Vellore</option>
-        <option value="Tirupathur">Tirupathur</option>
-        <option value="Punjab">Punjab</option>
-        <option value="Haryana">Haryana</option>
-        <option value="Uttar Pradesh">Uttar Pradesh</option>
-        <option value="Himachal Pradesh">Himachal Pradesh</option>
-        <option value="Gujarat">Gujarat</option>
-        <option value="Madhya Pradesh">Madhya Pradesh</option>
-      </select>
-    </div>
-    <div class="input-group">
-      <label>Date</label>
-      <input type="date" id="date" required>
-    </div>
-    <div class="input-group">
-      <label>Departure Time</label>
-      <input type="time" id="time" required>
-    </div>
-    <div class="input-group">
-      <label>Seats</label>
-      <select id="seats">
-        <option>1</option><option>2</option><option>3</option><option>4</option>
-      </select>
-    </div>
-    <button type="submit" class="btn">Confirm Booking</button>
-  </form>
-  <p style="margin-top:15px;"><a href="user-dashboard.html">⬅ Back to Dashboard</a></p>
+  <h2>Book Ticket 🎟</h2>
+  <form id="bookingForm">
+    <div class="input-group">
+      <label>From</label>
+      <select id="from" required>
+        <option value="">Select Origin</option>
+        <option value="Chittoor">Chittoor</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label>To</label>
+      <select id="to" required>
+        <option value="">Select Destination</option>
+        <option value="Chennai">Chennai</option>
+        <option value="Vellore">Vellore</option>
+        <option value="Tirupathur">Tirupathur</option>
+        <option value="Punjab">Punjab</option>
+        <option value="Haryana">Haryana</option>
+        <option value="Uttar Pradesh">Uttar Pradesh</option>
+        <option value="Himachal Pradesh">Himachal Pradesh</option>
+        <option value="Gujarat">Gujarat</option>
+        <option value="Madhya Pradesh">Madhya Pradesh</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label>Date</label>
+      <input type="date" id="date" required>
+    </div>
+    <div class="input-group">
+      <label>Departure Time</label>
+      <input type="time" id="time" required>
+    </div>
+    <div class="input-group">
+      <label>Seats</label>
+      <select id="seats">
+        <option>1</option><option>2</option><option>3</option><option>4</option>
+      </select>
+    </div>
+    <button type="submit" class="btn">Confirm Booking</button>
+  </form>
+  <p style="margin-top:15px;"><a href="user-dashboard.html">⬅ Back to Dashboard</a></p>
 </div>
 
 <script>
-  document.getElementById("bookingForm").addEventListener("submit", function(e) {
-    e.preventDefault();
+  document.getElementById("bookingForm").addEventListener("submit", function(e) {
+    e.preventDefault();
 
-    const from = document.getElementById("from").value;
-    const to = document.getElementById("to").value;
-    const date = document.getElementById("date").value;
-    const time = document.getElementById("time").value;
-    const seats = parseInt(document.getElementById("seats").value);
+    const from = document.getElementById("from").value;
+    const to = document.getElementById("to").value;
+    const date = document.getElementById("date").value;
+    const time = document.getElementById("time").value;
+    const seats = parseInt(document.getElementById("seats").value);
 
-    // Allowed routes only
-    const allowedDestinations = ["Chennai","Vellore","Tirupathur","Punjab","Haryana","Uttar Pradesh","Himachal Pradesh","Gujarat","Madhya Pradesh"];
-    if (!from || !to || !date || !time) {
-      alert("Please fill all details!");
-      return;
-    }
-    if (!allowedDestinations.includes(to)) {
-      alert(`❌ Sorry! We currently do not serve the route to ${to}. Please select a valid destination.`);
-      return;
-    }
+    // Allowed routes only
+    const allowedDestinations = ["Chennai","Vellore","Tirupathur","Punjab","Haryana","Uttar Pradesh","Himachal Pradesh","Gujarat","Madhya Pradesh"];
+    if (!from || !to || !date || !time) {
+      alert("Please fill all details!");
+      return;
+    }
+    if (!allowedDestinations.includes(to)) {
+      alert(`❌ Sorry! We currently do not serve the route to ${to}. Please select a valid destination.`);
+      return;
+    }
 
-    const user = JSON.parse(localStorage.getItem("currentUser"));
-    if (!user) {
-      alert("Please login first!");
-      window.location.href = "login.html";
-      return;
-    }
+    const user = JSON.parse(localStorage.getItem("currentUser"));
+    if (!user) {
+      alert("Please login first!");
+      window.location.href = "login.html";
+      return;
+    }
 
-    const price = seats * 250;
+    const price = seats * 250;
 
-    const booking = {
-      id: "TID" + Date.now(),
-      email: user.email,
-      from,
-      to,
-      date,
-      time,
-      seats,
-      price,
-      bookedAt: new Date().toLocaleString()
-    };
+    const booking = {
+      id: "TID" + Date.now(),
+      email: user.email,
+      from,
+      to,
+      date,
+      time,
+      seats,
+      price,
+      bookedAt: new Date().toLocaleString()
+    };
 
-    let allBookings = JSON.parse(localStorage.getItem("allBookings")) || [];
-    allBookings.push(booking);
-    localStorage.setItem("allBookings", JSON.stringify(allBookings));
+    let allBookings = JSON.parse(localStorage.getItem("allBookings")) || [];
+    allBookings.push(booking);
+    localStorage.setItem("allBookings", JSON.stringify(allBookings));
 
-    alert("✅ Ticket booked successfully!");
-    window.location.href = "my-bookings.html";
-  });
+    alert("✅ Ticket booked successfully!");
+    window.location.href = "my-bookings.html";
+  });
 </script>
 
 </body>
