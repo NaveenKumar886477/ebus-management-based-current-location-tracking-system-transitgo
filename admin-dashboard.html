@@ -1,3 +1,11 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard - TransitGo</title>
+<link rel="icon" href="./images/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +14,7 @@
 <title>Admin Dashboard - TransitGo</title>
 <link rel="icon" href="./images/logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> <style>
+<style>
 body {
     font-family: 'Inter', sans-serif;
     margin: 0;
@@ -19,8 +27,8 @@ h2 {
     font-size: 2.5rem;
     font-weight: 700;
     background: linear-gradient(90deg, #1d4ed8, #3b82f6);
-    -webkit-background-clip: text; /* Corrected CSS prefix */
-    -webkit-text-fill-color: transparent; /* Corrected CSS prefix */
+    --webkit-background-clip: text;
+    --webkit-text-fill-color: transparent;
     margin-bottom: 20px;
 }
 #adminName {
@@ -55,8 +63,8 @@ h2 {
 .card h3 {
     font-size: 2.4rem;
     background: linear-gradient(90deg, #1d4ed8, #3b82f6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    --webkit-background-clip: text;
+    --webkit-text-fill-color: transparent;
     margin-bottom: 8px;
 }
 .card p {
@@ -64,7 +72,6 @@ h2 {
     color: #374151;
 }
 /* Section Titles */
-.section { margin-bottom: 40px; }
 .section h3 {
     color: #1d4ed8;
     margin-bottom: 20px;
@@ -106,11 +113,7 @@ tr:hover { background: rgba(59,130,246,0.1); transition: 0.3s; }
 .status-inprogress { background: #3b82f6; }
 .status-completed { background: #f59e0b; }
 .status-inactive { background: #6b7280; }
-.role-admin { background: #f97316; }
-.role-driver { background: #1d4ed8; }
-.role-user { background: #6b7280; }
-
-/* Bus Cards - existing styles kept */
+/* Bus Cards */
 .bus-details {
     display: flex;
     flex-wrap: wrap;
@@ -164,29 +167,8 @@ tr:hover { background: rgba(59,130,246,0.1); transition: 0.3s; }
     50% { transform: scale(1.5); opacity: 0.4; }
     100% { transform: scale(1); opacity: 0.8; }
 }
-
-/* User Management Button */
-.action-btn {
-    background: #3b82f6;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.2s;
-    font-weight: 500;
-    font-size: 0.85rem;
-}
-.action-btn:hover { background: #1d4ed8; }
-.action-btn:disabled { background: #9ca3af; cursor: not-allowed; }
-
 /* Responsive */
-@media(max-width:768px){ 
-    .stats, .bus-details { flex-direction: column; align-items: center; } 
-    th, td { padding: 10px 8px; font-size: 0.9rem; }
-    .badge, .action-btn { font-size: 0.75rem; padding: 5px 10px; }
-    table { overflow-x: auto; display: block; white-space: nowrap; } /* Allow horizontal scroll for tables */
-}
+@media(max-width:768px){ .stats, .bus-details { flex-direction: column; align-items: center; } }
 </style>
 </head>
 <body>
@@ -199,18 +181,6 @@ tr:hover { background: rgba(59,130,246,0.1); transition: 0.3s; }
   <div class="card"><h3 id="totalDrivers">0</h3><p>Total Drivers</p></div>
   <div class="card"><h3 id="activeRoutes">0</h3><p>Active Routes</p></div>
   <div class="card"><h3 id="completedRoutes">0</h3><p>Completed Routes</p></div>
-</div>
-
-<div class="section">
-  <h3>User & Driver Management</h3>
-  <table id="userTable">
-    <thead>
-      <tr>
-        <th>Name</th><th>Email</th><th>Role</th><th>Action</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
 </div>
 
 <div class="section">
@@ -245,77 +215,17 @@ const allBusesList = [
     {busNumber:206, route:"Chittoor → Gujarat", driverName:"Driver-9"}
 ];
 
-// ====================================================================
-// NEW FUNCTIONALITY: User Management
-// ====================================================================
-
-function renderUserTable() {
-    const allUsers = JSON.parse(localStorage.getItem("users")) || [];
-    const currentUserEmail = JSON.parse(localStorage.getItem("currentUser"))?.email;
-    const tbody = document.querySelector("#userTable tbody");
-    tbody.innerHTML = "";
-
-    // Sort: Admins first, then Drivers, then Users
-    allUsers.sort((a, b) => {
-        const roleOrder = { "Admin": 1, "Driver": 2, "User": 3 };
-        return roleOrder[a.role] - roleOrder[b.role];
-    });
-
-    allUsers.forEach(user => {
-        const isCurrentUser = user.email === currentUserEmail;
-        const isDriver = user.role === "Driver";
-        const isAdmin = user.role === "Admin";
-        const roleClass = `role-${user.role.toLowerCase()}`;
-
-        const actionButton = isCurrentUser || isAdmin
-            ? `<button class="action-btn" disabled><i class="fas fa-lock"></i></button>`
-            : isDriver
-                ? `<button class="action-btn" onclick="changeUserRole('${user.email}', 'User')">Demote to User</button>`
-                : `<button class="action-btn" onclick="changeUserRole('${user.email}', 'Driver')">Promote to Driver</button>`;
-        
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td>${user.name}</td>
-          <td>${user.email}</td>
-          <td><span class="badge ${roleClass}">${user.role}</span></td>
-          <td>${actionButton}</td>
-        `;
-        tbody.appendChild(row);
-    });
-    if(allUsers.length === 0) tbody.innerHTML=`<tr><td colspan="4">No Users Found</td></tr>`;
-}
-
-window.changeUserRole = function(email, newRole) {
-    let allUsers = JSON.parse(localStorage.getItem("users")) || [];
-    const userIndex = allUsers.findIndex(u => u.email === email);
-
-    if (userIndex !== -1) {
-        if (confirm(`Are you sure you want to change the role of ${allUsers[userIndex].name} to ${newRole}?`)) {
-            allUsers[userIndex].role = newRole;
-            localStorage.setItem("users", JSON.stringify(allUsers));
-            alert(`Role updated successfully for ${allUsers[userIndex].name} to ${newRole}.`);
-            loadAdminDashboard(); // Reload dashboard to update stats and tables
-        }
-    }
-}
-// ====================================================================
-
 function loadAdminDashboard() {
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    // Get all users from local storage
-    const allUsers = JSON.parse(localStorage.getItem("users")) || [];
-    const drivers = allUsers.filter(u => u.role === "Driver");
-    const nonAdminUsers = allUsers.filter(u => u.role !== "Admin");
-
     const adminName = currentUser?.role === "Admin" ? currentUser.name : "Admin";
     document.getElementById("adminName").innerText = `Welcome, ${adminName}`;
 
     const allTrips = JSON.parse(localStorage.getItem("allTrips")) || [];
     const allBookings = JSON.parse(localStorage.getItem("allBookings")) || [];
-    
+    const users = [...new Set(allBookings.map(b=>b.email))];
+
     // Merge trips info to allBusesList
     const busData = allBusesList.map(bus => {
-        // Check if the bus has an assigned trip in allTrips
         const trip = allTrips.find(t => t.busNumber === bus.busNumber);
         return {
             busNumber: bus.busNumber,
@@ -326,21 +236,15 @@ function loadAdminDashboard() {
     });
 
     // Stats
-    // Note: totalUsers counts all non-admin users/drivers. totalDrivers counts those with 'Driver' role.
-    document.getElementById("totalUsers").innerText = nonAdminUsers.length; 
-    document.getElementById("totalDrivers").innerText = drivers.length;
+    document.getElementById("totalUsers").innerText = users.length;
+    document.getElementById("totalDrivers").innerText = busData.length;
     document.getElementById("activeRoutes").innerText = busData.filter(b=>b.status==="active" || b.status==="inprogress").length;
     document.getElementById("completedRoutes").innerText = busData.filter(b=>b.status==="completed").length;
-
-    // Render the new User Management Table
-    renderUserTable();
 
     // Trips Table
     const tbody = document.querySelector("#tripsTable tbody");
     tbody.innerHTML = "";
     allTrips.forEach(trip=>{
-        // Assuming bookingId links to a single booking for a single seat/trip. 
-        // In a real app, this logic might be different (many bookings per trip).
         const booking = allBookings.find(b=>b.id===trip.bookingId) || {};
         const statusClass = trip.status==="active"?"status-active":trip.status==="completed"?"status-completed":"status-inprogress";
         const row = document.createElement("tr");
