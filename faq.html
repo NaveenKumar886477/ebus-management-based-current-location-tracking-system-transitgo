@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -89,7 +89,6 @@
     }
     .footer-logo img { width: 130px; margin-bottom: 10px; }
     .footer-logo p { font-size: 0.9rem; color: #aaa; }
-    .footer-links h3, .footer-social h3, .newsletter h3 { color: #00c6ff; }
     .footer-links ul { list-style: none; padding: 0; }
     .footer-links ul li { margin: 10px 0; }
     .footer-links ul li a { text-decoration: none; color: #ccc; transition: 0.3s; }
@@ -101,76 +100,6 @@
     .newsletter button:hover { background: #0072ff; }
     .message { font-size: 0.9rem; margin-top: 5px; }
     .footer-bottom { margin-top: 30px; text-align: center; padding-top: 15px; border-top: 1px solid #333; font-size: 0.85rem; color: #777; }
-
-    /* =========================== */
-    /* == NEW MEDIA QUERIES == */
-    /* =========================== */
-
-    /* Tablet and smaller (Max 768px) */
-    @media (max-width: 768px) {
-      /* Adjust FAQ heading */
-      h1 {
-        font-size: 2rem;
-        margin-top: 30px;
-      }
-      
-      /* Adjust FAQ item padding/font size */
-      .faq-question {
-        font-size: 1rem;
-      }
-
-      /* Footer: Collapse to vertical stack */
-      .footer-container {
-        grid-template-columns: 1fr; /* Single column layout */
-        text-align: center;
-      }
-      
-      /* Ensure the Quick Links list looks neat in two columns */
-      .footer-links ul {
-        columns: 2;
-        -webkit-columns: 2;
-        -moz-columns: 2;
-        text-align: left;
-        max-width: 400px;
-        margin: 0 auto 20px auto;
-      }
-
-      /* Center elements within stacked footer sections */
-      .footer-logo, .footer-social, .newsletter {
-        text-align: center;
-      }
-      .footer-social .social-icons {
-        display: inline-block; /* keeps icons grouped */
-      }
-      .newsletter input {
-        width: 90%;
-        max-width: 300px;
-      }
-    }
-
-    /* Mobile Phones (Max 480px) */
-    @media (max-width: 480px) {
-      /* Reduce heading size further */
-      h1 {
-        font-size: 1.75rem;
-        margin-top: 20px;
-      }
-      
-      /* FAQ question padding reduction */
-      .faq-question {
-        padding: 15px 15px;
-      }
-      .faq-question i {
-        right: 15px;
-      }
-
-      /* Collapse footer links to a single column */
-      .footer-links ul {
-        columns: 1;
-        max-width: unset;
-        text-align: center;
-      }
-    }
   </style>
 </head>
 <body>
@@ -197,7 +126,7 @@
     <div class="faq-item">
       <div class="faq-question">How do I report an issue with a bus? <i class="fas fa-chevron-down"></i></div>
       <div class="faq-answer">Use the 'Report Issue' feature in the app to notify us about delays, route errors, or other concerns.</div>
-      </div>
+    </div>
     <div class="faq-item">
       <div class="faq-question">Is my data safe with TransitGo? <i class="fas fa-chevron-down"></i></div>
       <div class="faq-answer">Yes, we prioritize your privacy and use encrypted connections to protect your personal information.</div>
@@ -220,7 +149,8 @@
     </div>
   </div>
 
-    <footer>
+  <!-- Footer -->
+  <footer>
     <div class="footer-container">
       <div class="footer-logo">
         <img src="./images/logo.png" alt="TransitGo Logo">
@@ -260,7 +190,7 @@
     </div>
     <div class="footer-bottom">
       <p>© 2025 <span style="color:#00c6ff;">TransitGo</span> | All Rights Reserved</p>
-      </div>
+    </div>
   </footer>
 
   <script>
