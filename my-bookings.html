@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -6,153 +6,34 @@
 <title>My Bookings - TransitGo</title>
 <link rel="icon" href="./images/logo.png">
 
+<!-- PDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 
+<!-- Leaflet -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
 <style>
-  body { 
-    margin:0; 
-    font-family:'Poppins',sans-serif; 
-    background:linear-gradient(135deg,#232526,#414345); 
-    color:white; 
-    display:flex; 
-    flex-direction:column; 
-    align-items:center; 
-    padding:30px; 
-    min-height: 100vh; /* Ensure full viewport height */
-}
+  body { margin:0; font-family:'Poppins',sans-serif; background:linear-gradient(135deg,#232526,#414345); color:white; display:flex; flex-direction:column; align-items:center; padding:30px; }
   h2 { color:#00c6ff; margin-bottom:20px; }
-  .booking { 
-    background: rgba(255,255,255,0.1); 
-    padding:20px; 
-    border-radius:12px; 
-    box-shadow:0 6px 20px rgba(0,0,0,0.4); 
-    margin-bottom:30px; 
-    width:500px; /* Default width for desktop/tablet */
-    max-width: 100%; /* Ensure it respects parent width */
-    text-align:left; 
-    position:relative; 
-}
-  .booking h3 { color:#ffd700; margin-top:0; font-size: 1.5rem; }
-  .booking p { margin:6px 0; font-size: 1rem; }
-  .btn { 
-    background:#00c6ff; 
-    color:white; 
-    border:none; 
-    padding:8px 15px; 
-    border-radius:8px; 
-    cursor:pointer; 
-    margin-right:10px; 
-    transition:0.3s; 
-    font-size: 0.95rem;
-}
+  .booking { background: rgba(255,255,255,0.1); padding:20px; border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.4); margin-bottom:30px; width:500px; text-align:left; position:relative; }
+  .booking h3 { color:#ffd700; margin-top:0; }
+  .booking p { margin:6px 0; }
+  .btn { background:#00c6ff; color:white; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; margin-right:10px; transition:0.3s; }
   .btn:hover { background:#0072ff; }
   .btn.cancel { background:#ff4d4d; }
   .btn.cancel:hover { background:#cc0000; }
   .safe-para { margin-top:10px; font-style:italic; color:#a8ff60; }
   .link { margin-top:15px; }
-  .link a { color:#00c6ff; text-decoration:none; transition: 0.3s; }
-  .link a:hover { text-decoration:underline; color: #4dc2ff; }
+  .link a { color:#00c6ff; text-decoration:none; }
+  .link a:hover { text-decoration:underline; }
   .map { height:250px; width:100%; margin-top:10px; border-radius:10px; }
   .bus-icon { font-size:30px; text-shadow:0 0 5px black; }
   .leaflet-marker-icon.bus-icon { background:transparent; border:none; }
-  .message-box { 
-    position:fixed; 
-    top:50%; 
-    left:50%; 
-    transform:translate(-50%,-50%); 
-    background: rgba(0,0,0,0.8); 
-    padding:20px; 
-    border-radius:10px; 
-    z-index:1000; 
-    text-align:center; 
-    display:none; 
-    max-width: 80%; /* Ensure it fits on smaller screens */
-}
+  .message-box { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background: rgba(0,0,0,0.8); padding:20px; border-radius:10px; z-index:1000; text-align:center; display:none; }
   .message-box p { margin:0; font-size:1.2rem; }
   .message-box button { margin-top:10px; background:#00c6ff; color:white; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; }
-  
-/* =================================
-      MEDIA QUERIES FOR RESPONSIVENESS
-    ================================= */
-
-/* 1. Medium Devices (Tablets, Max width 768px) */
-@media (max-width: 768px) {
-    body {
-        padding: 20px;
-    }
-    .booking { 
-        /* Allow booking card to take more width on tablets */
-        width: 85%;
-        padding: 18px;
-    }
-    .map {
-        height: 200px; /* Slightly reduce map height */
-    }
-}
-
-/* 2. Small Devices (Mobile Phones, Max width 576px) */
-@media (max-width: 576px) {
-    body {
-        padding: 15px 10px; /* Reduced padding for smaller screens */
-        align-items: stretch; /* Stretch content to edges */
-    }
-    h2 {
-        font-size: 1.8rem;
-        margin-bottom: 15px;
-        text-align: center;
-    }
-    .booking {
-        /* Full width of the container (minus body padding) */
-        width: 100%;
-        padding: 15px;
-        margin-bottom: 20px;
-        box-sizing: border-box; /* Include padding in the width calculation */
-    }
-    .booking h3 {
-        font-size: 1.3rem;
-        margin-bottom: 10px;
-    }
-    .booking p {
-        font-size: 0.95rem;
-    }
-    .btn {
-        /* Make buttons stack nicely on mobile */
-        display: block;
-        width: 100%;
-        margin: 10px 0 0 0; /* Full width and space them out */
-        padding: 10px;
-        box-sizing: border-box;
-    }
-    .btn:first-of-type {
-        margin-top: 15px; /* Add space above the first button */
-    }
-    .map {
-        height: 180px; /* Further reduce map height for minimal vertical scroll */
-    }
-    .message-box {
-        padding: 15px;
-    }
-    .message-box p {
-        font-size: 1rem;
-    }
-}
-
-/* 3. Extra Small Devices (Max width 350px) */
-@media (max-width: 350px) {
-    h2 {
-        font-size: 1.5rem;
-    }
-    .booking h3 {
-        font-size: 1.1rem;
-    }
-    .booking p {
-        font-size: 0.9rem;
-    }
-}
 </style>
 </head>
 <body>
@@ -160,6 +41,7 @@
 <h2>My Bookings</h2>
 <div id="bookingsContainer"></div>
 
+<!-- Message Box -->
 <div id="messageBox" class="message-box">
   <p id="messageText"></p>
   <button onclick="hideMessage()">OK</button>
