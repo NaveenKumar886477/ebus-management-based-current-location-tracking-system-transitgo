@@ -6,48 +6,45 @@
 <title>Admin Dashboard - TransitGo</title>
 <link rel="icon" href="./images/logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
 <style>
-  body { font-family: 'Inter', sans-serif; margin:0; padding:20px; background: linear-gradient(135deg, #e0eafc, #cfdef3); color:#1f2937; }
-  h2 { text-align:center; font-size:2.5rem; font-weight:700; background: linear-gradient(90deg, #1d4ed8, #3b82f6); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:20px;}
-  #adminName { text-align:center; font-size:1.5rem; font-weight:500; color:#374151; margin-bottom:50px;}
-
-  .stats { display:flex; flex-wrap:wrap; justify-content:center; gap:25px; margin-bottom:60px; }
-  .card { background: rgba(255,255,255,0.15); backdrop-filter: blur(15px); width:200px; padding:30px 20px; border-radius:20px; text-align:center; box-shadow:0 15px 35px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s;}
-  .card:hover { transform: translateY(-12px); box-shadow:0 25px 50px rgba(0,0,0,0.2);}
-  .card h3 { font-size:2.4rem; background:linear-gradient(90deg, #1d4ed8, #3b82f6); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:8px;}
-  .card p { font-weight:600; color:#374151; }
-
-  .section h3 { color:#1d4ed8; margin-bottom:20px; font-weight:600; font-size:1.6rem; }
-
-  table { width:100%; border-collapse:collapse; border-radius:15px; overflow:hidden; background: rgba(255,255,255,0.2); backdrop-filter: blur(15px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); transition: all 0.3s; }
-  th, td { padding:15px 12px; text-align:center; }
-  th { background:linear-gradient(90deg, #1d4ed8, #3b82f6); color:#fff; font-weight:600; letter-spacing:0.5px; }
-  tr:nth-child(even) { background: rgba(255,255,255,0.05);}
-  tr:hover { background: rgba(59,130,246,0.1); transition:0.3s;}
-
-  .badge { padding:6px 14px; border-radius:20px; font-weight:600; font-size:0.85rem; color:#fff; text-transform:uppercase; }
-  .status-active { background:#10b981; }
-  .status-inprogress { background:#3b82f6; }
-  .status-completed { background:#f59e0b; }
-  .status-inactive { background:#6b7280; }
-
-  .bus-details { display:flex; flex-wrap:wrap; gap:25px; justify-content:center; margin-top:30px;}
-  .bus-card { position:relative; background: rgba(255,255,255,0.15); backdrop-filter: blur(15px); width:260px; padding:25px 20px; border-radius:25px; text-align:center; box-shadow:0 20px 40px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s; }
-  .bus-card:hover { transform: translateY(-10px); box-shadow:0 25px 50px rgba(0,0,0,0.2); }
-  .bus-card h4 { color:#1d4ed8; font-size:1.4rem; margin-bottom:12px; }
-  .bus-card p { color:#374151; margin-bottom:10px; font-weight:500; }
-  .bus-status { display:inline-block; padding:6px 16px; border-radius:25px; font-weight:600; font-size:0.9rem; color:#fff; text-transform:uppercase; }
-  .bus-moving { position:absolute; top:15px; right:15px; width:20px; height:20px; border-radius:50%; background:#3b82f6; animation:pulse 1.2s infinite;}
-  @keyframes pulse { 0% { transform: scale(1); opacity:0.8; } 50% { transform: scale(1.5); opacity:0.4; } 100% { transform: scale(1); opacity:0.8; } }
-
-  @media(max-width:768px){ .stats, .bus-details { flex-direction:column; align-items:center; } }
+body { font-family: 'Inter', sans-serif; margin:0; padding:20px; background:linear-gradient(135deg,#e0eafc,#cfdef3); color:#1f2937;}
+h2 {text-align:center; font-size:2.5rem; font-weight:700; background:linear-gradient(90deg,#1d4ed8,#3b82f6); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:20px;}
+#adminName {text-align:center; font-size:1.5rem; font-weight:500; color:#374151; margin-bottom:50px;}
+.stats {display:flex; flex-wrap:wrap; justify-content:center; gap:25px; margin-bottom:60px;}
+.card {background:rgba(255,255,255,0.15); backdrop-filter:blur(15px); width:200px; padding:30px 20px; border-radius:20px; text-align:center; box-shadow:0 15px 35px rgba(0,0,0,0.1); transition:transform 0.3s, box-shadow 0.3s;}
+.card:hover {transform:translateY(-12px); box-shadow:0 25px 50px rgba(0,0,0,0.2);}
+.card h3 {font-size:2.4rem; background:linear-gradient(90deg,#1d4ed8,#3b82f6); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:8px;}
+.card p {font-weight:600; color:#374151;}
+.section h3 {color:#1d4ed8; margin-bottom:20px; font-weight:600; font-size:1.6rem;}
+table {width:100%; border-collapse:collapse; border-radius:15px; overflow:hidden; background:rgba(255,255,255,0.2); backdrop-filter:blur(15px); box-shadow:0 15px 35px rgba(0,0,0,0.1); transition:all 0.3s;}
+th, td {padding:12px; text-align:center;}
+th {background:linear-gradient(90deg,#1d4ed8,#3b82f6); color:#fff; font-weight:600;}
+tr:nth-child(even) { background: rgba(255,255,255,0.05); }
+tr:hover { background: rgba(59,130,246,0.1); transition: 0.3s; }
+.badge {padding:6px 14px; border-radius:20px; font-weight:600; font-size:0.85rem; color:#fff; text-transform:uppercase;}
+.status-active {background:#10b981;}
+.status-inprogress {background:#3b82f6;}
+.status-completed {background:#f59e0b;}
+.status-inactive {background:#6b7280;}
+.status-cancelled {background:#ef4444;}
+.bus-details {display:flex; flex-wrap:wrap; gap:25px; justify-content:center; margin-top:30px;}
+.bus-card {position:relative; background:rgba(255,255,255,0.15); backdrop-filter:blur(15px); width:260px; padding:25px 20px; border-radius:25px; text-align:center; box-shadow:0 20px 40px rgba(0,0,0,0.1); transition:transform 0.3s, box-shadow 0.3s;}
+.bus-card:hover {transform:translateY(-10px); box-shadow:0 25px 50px rgba(0,0,0,0.2);}
+.bus-card h4 {color:#1d4ed8; font-size:1.4rem; margin-bottom:12px;}
+.bus-card p {color:#374151; margin-bottom:10px; font-weight:500;}
+.bus-status {display:inline-block; padding:6px 16px; border-radius:25px; font-weight:600; font-size:0.9rem; color:#fff; text-transform:uppercase;}
+.bus-moving {position:absolute; top:15px; right:15px; width:20px; height:20px; border-radius:50%; background:#3b82f6; animation:pulse 1.2s infinite;}
+button {padding:5px 10px; margin:2px; border:none; border-radius:5px; cursor:pointer;}
+button.cancel {background:#ef4444; color:#fff;}
+button.delete {background:#6b7280; color:#fff;}
+@keyframes pulse {0%{transform:scale(1); opacity:0.8}50%{transform:scale(1.5);opacity:0.4}100%{transform:scale(1);opacity:0.8}}
+@media(max-width:768px){.stats,.bus-details{flex-direction:column; align-items:center;}}
 </style>
 </head>
 <body>
 
 <h2>Admin Dashboard - TransitGo</h2>
-<div id="adminName">Welcome</div>
+<div id="adminName">Welcome, Admin</div>
 
 <div class="stats">
   <div class="card"><h3 id="totalUsers">0</h3><p>Total Users</p></div>
@@ -62,7 +59,7 @@
     <thead>
       <tr>
         <th>Ticket ID</th><th>User Email</th><th>Route</th><th>Bus Number</th>
-        <th>Driver Name</th><th>Status</th><th>Date</th><th>Time</th><th>Seats</th><th>Price</th>
+        <th>Driver Name</th><th>Status</th><th>Date</th><th>Time</th><th>Seats</th><th>Price</th><th>Actions</th>
       </tr>
     </thead>
     <tbody></tbody>
@@ -87,95 +84,136 @@ const allBusesList = [
   {busNumber:206, route:"Chittoor → Gujarat", driverName:"Driver-9"}
 ];
 
-function loadAdminDashboard() {
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-  const adminName = currentUser?.role === "Admin" ? currentUser.name : "Admin";
-  document.getElementById("adminName").innerText = `Welcome, ${adminName}`;
 
-  const allTrips = JSON.parse(localStorage.getItem("allTrips")) || [];
-  const allBookings = JSON.parse(localStorage.getItem("allBookings")) || [];
+let allTrips = [];
+let allBookings = [];
 
-  // Total unique users
-  const users = [...new Set(allBookings.map(b => b.email))];
-  document.getElementById("totalUsers").innerText = users.length;
+// Function to send cancellation message to user dashboard
+function notifyUser(email, reason) {
+  // For demo, we just log to console. In real app, send to user dashboard
+  console.log(`Notification sent to ${email}: ${reason}`);
+}
 
-  // Total drivers = buses count
-  document.getElementById("totalDrivers").innerText = allBusesList.length;
+function cancelTrip(bookingId) {
+  const reason = prompt("Enter reason for cancellation:");
+  if(!reason) return alert("Cancellation reason required!");
+  const tripIndex = allTrips.findIndex(t=>t.bookingId===bookingId);
+  if(tripIndex!==-1) {
+    allTrips[tripIndex].status="cancelled";
+    notifyUser(allTrips[tripIndex].userEmail || "Unknown", reason);
+    updateDashboard();
+  }
+}
 
-  // Merge trips into buses dynamically
-  const busData = allBusesList.map(bus => {
-    const tripsForBus = allTrips.filter(t => t.busNumber === bus.busNumber && t.route === bus.route);
-    let status = "inactive";
-    for (let t of tripsForBus) {
-      const s = t.status?.toLowerCase()?.trim();
-      if(s === "active") { status="active"; break; }
-      if(s === "inprogress" && status!=="active") status="inprogress";
-      if(s === "completed" && status!=="active" && status!=="inprogress") status="completed";
+function deleteTrip(bookingId) {
+  const tripIndex = allTrips.findIndex(t=>t.bookingId===bookingId);
+  if(tripIndex!==-1) {
+    const userEmail = allTrips[tripIndex].userEmail || "Unknown";
+    allTrips.splice(tripIndex,1);
+    allBookings = allBookings.filter(b=>b.id!==bookingId);
+    notifyUser(userEmail, "Your trip has been deleted by admin.");
+    updateDashboard();
+  }
+}
+
+function addNewBooking(booking, trip) {
+  allBookings.push(booking);
+  allTrips.push({...trip, userEmail: booking.email});
+  updateDashboard();
+}
+
+function updateDashboard() {
+  const users = [...new Set(allBookings.map(b=>b.email))];
+  
+  const busData = allBusesList.map(bus=>{
+    const tripsForBus = allTrips.filter(t=>t.busNumber===bus.busNumber);
+    let status="inactive";
+    for(let t of tripsForBus){
+      const s=t.status?.toLowerCase();
+      if(s==="active"){status="active";break;}
+      if(s==="inprogress" && status!=="active") status="inprogress";
+      if(s==="completed" && status!=="active" && status!=="inprogress") status="completed";
     }
-    return {...bus, status};
+    return {...bus,status};
   });
 
-  document.getElementById("activeRoutes").innerText = busData.filter(b=>b.status==="active" || b.status==="inprogress").length;
-  document.getElementById("completedRoutes").innerText = busData.filter(b=>b.status==="completed").length;
+  document.getElementById("totalUsers").innerText=users.length;
+  document.getElementById("totalDrivers").innerText=allBusesList.length;
+  document.getElementById("activeRoutes").innerText=busData.filter(b=>b.status==="active"||b.status==="inprogress").length;
+  document.getElementById("completedRoutes").innerText=busData.filter(b=>b.status==="completed").length;
 
-  // Update Trips Table
-  const tbody = document.querySelector("#tripsTable tbody");
-  tbody.innerHTML = "";
+  const tbody=document.querySelector("#tripsTable tbody");
+  tbody.innerHTML="";
   if(allTrips.length===0){
-    tbody.innerHTML = `<tr><td colspan="10">No Trips Found</td></tr>`;
+    tbody.innerHTML=`<tr><td colspan="11">No Trips Found</td></tr>`;
   } else {
-    allTrips.forEach(trip => {
-      const booking = allBookings.find(b=>b.id===trip.bookingId) || {};
-      const s = trip.status?.toLowerCase()?.trim();
-      let statusClass = "status-inactive";
+    allTrips.forEach(trip=>{
+      let statusClass="status-inactive";
+      const s=trip.status?.toLowerCase();
       if(s==="active") statusClass="status-active";
       else if(s==="inprogress") statusClass="status-inprogress";
       else if(s==="completed") statusClass="status-completed";
-
-      const row = document.createElement("tr");
-      row.innerHTML = `
+      else if(s==="cancelled") statusClass="status-cancelled";
+      const row=document.createElement("tr");
+      row.innerHTML=`
         <td>${trip.bookingId}</td>
-        <td>${booking.email || "N/A"}</td>
+        <td>${trip.userEmail||"N/A"}</td>
         <td>${trip.route}</td>
         <td>${trip.busNumber}</td>
         <td>${trip.driverName}</td>
         <td><span class="badge ${statusClass}">${trip.status.toUpperCase()}</span></td>
-        <td>${booking.date || "N/A"}</td>
-        <td>${booking.time || "N/A"}</td>
-        <td>${booking.seats || "N/A"}</td>
-        <td>₹${booking.price || "0"}</td>
+        <td>${trip.date||"N/A"}</td>
+        <td>${trip.time||"N/A"}</td>
+        <td>${trip.seats||"N/A"}</td>
+        <td>₹${trip.price||"0"}</td>
+        <td>
+          <button class="cancel" onclick="cancelTrip(${trip.bookingId})">Cancel</button>
+          <button class="delete" onclick="deleteTrip(${trip.bookingId})">Delete</button>
+        </td>
       `;
       tbody.appendChild(row);
     });
   }
 
-  // Update Bus Cards dynamically
-  const busContainer = document.getElementById("busDetailsContainer");
-  busContainer.innerHTML = "";
+  const busContainer=document.getElementById("busDetailsContainer");
+  busContainer.innerHTML="";
   busData.forEach(bus=>{
-    const s = bus.status?.toLowerCase();
     let statusClass="status-inactive";
+    const s=bus.status?.toLowerCase();
     if(s==="active") statusClass="status-active";
     else if(s==="inprogress") statusClass="status-inprogress";
     else if(s==="completed") statusClass="status-completed";
-
-    const div = document.createElement("div");
+    const div=document.createElement("div");
     div.classList.add("bus-card");
-    div.innerHTML = `
+    div.innerHTML=`
       <h4>Bus #${bus.busNumber}</h4>
       <p>Route: ${bus.route}</p>
       <p>Driver: ${bus.driverName}</p>
       <span class="bus-status ${statusClass}">${bus.status.toUpperCase()}</span>
-      ${s==="inprogress"?'<div class="bus-moving"></div>':''}
+      ${bus.status==="inprogress"?'<div class="bus-moving"></div>':''}
     `;
     busContainer.appendChild(div);
   });
 }
 
-// Run immediately and refresh every 3s
-loadAdminDashboard();
-setInterval(loadAdminDashboard, 3000);
-</script>
+// Initial dashboard
+updateDashboard();
 
+// Demo: dynamically add new bookings
+setTimeout(()=>{
+  addNewBooking(
+    {id:1,email:"user1@example.com",date:"2025-10-02",time:"09:00",seats:2,price:200},
+    {bookingId:1,busNumber:144,route:"Chittoor → Chennai",driverName:"Driver-1",status:"active"}
+  );
+},1000);
+
+setTimeout(()=>{
+  addNewBooking(
+    {id:2,email:"user2@example.com",date:"2025-10-02",time:"11:00",seats:1,price:120},
+    {bookingId:2,busNumber:102,route:"Chittoor → Vellore",driverName:"Driver-2",status:"inprogress"}
+  );
+},2000);
+
+</script>
 </body>
 </html>
