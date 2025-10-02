@@ -1,287 +1,300 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Dashboard - TransitGo</title>
-<link rel="icon" href="./images/logo.png">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-body {
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-    padding: 20px;
-    background: linear-gradient(135deg, #e0eafc, #cfdef3);
-    color: #1f2937;
-}
-h2 {
-    text-align: center;
-    font-size: 2.5rem;
-    font-weight: 700;
-    background: linear-gradient(90deg, #1d4ed8, #3b82f6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 20px;
-}
-#adminName {
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: 500;
-    color: #374151;
-    margin-bottom: 50px;
-}
-/* Stats Cards */
-.stats {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 25px;
-    margin-bottom: 60px;
-}
-.card {
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(15px);
-    width: 200px;
-    padding: 30px 20px;
-    border-radius: 20px;
-    text-align: center;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-.card:hover {
-    transform: translateY(-12px);
-    box-shadow: 0 25px 50px rgba(0,0,0,0.2);
-}
-.card h3 {
-    font-size: 2.4rem;
-    background: linear-gradient(90deg, #1d4ed8, #3b82f6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 8px;
-}
-.card p {
-    font-weight: 600;
-    color: #374151;
-}
-/* Section Titles */
-.section h3 {
-    color: #1d4ed8;
-    margin-bottom: 20px;
-    font-weight: 600;
-    font-size: 1.6rem;
-}
-/* Table */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    border-radius: 15px;
-    overflow: hidden;
-    background: rgba(255,255,255,0.2);
-    backdrop-filter: blur(15px);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-    transition: all 0.3s;
-}
-th, td {
-    padding: 15px 12px;
-    text-align: center;
-}
-th {
-    background: linear-gradient(90deg, #1d4ed8, #3b82f6);
-    color: #fff;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-}
-tr:nth-child(even) { background: rgba(255,255,255,0.05); }
-tr:hover { background: rgba(59,130,246,0.1); transition: 0.3s; }
-.badge {
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-weight: 600;
-    font-size: 0.85rem;
-    color: #fff;
-    text-transform: uppercase;
-}
-.status-active { background: #10b981; }
-.status-inprogress { background: #3b82f6; }
-.status-completed { background: #f59e0b; }
-.status-inactive { background: #6b7280; }
-/* Bus Cards */
-.bus-details {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 25px;
-    justify-content: center;
-    margin-top: 30px;
-}
-.bus-card {
-    position: relative;
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(15px);
-    width: 260px;
-    padding: 25px 20px;
-    border-radius: 25px;
-    text-align: center;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-.bus-card:hover { transform: translateY(-10px); box-shadow: 0 25px 50px rgba(0,0,0,0.2); }
-.bus-card h4 {
-    color: #1d4ed8;
-    font-size: 1.4rem;
-    margin-bottom: 12px;
-}
-.bus-card p {
-    color: #374151;
-    margin-bottom: 10px;
-    font-weight: 500;
-}
-.bus-status {
-    display: inline-block;
-    padding: 6px 16px;
-    border-radius: 25px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    color: #fff;
-    text-transform: uppercase;
-}
-.bus-moving {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #3b82f6;
-    animation: pulse 1.2s infinite;
-}
-@keyframes pulse {
-    0% { transform: scale(1); opacity: 0.8; }
-    50% { transform: scale(1.5); opacity: 0.4; }
-    100% { transform: scale(1); opacity: 0.8; }
-}
-/* Responsive */
-@media(max-width:768px){ .stats, .bus-details { flex-direction: column; align-items: center; } }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - TransitGo</title>
+  <link rel="icon" href="./images/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(135deg, #e0eafc, #cfdef3);
+      color: #1f2937;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #1d4ed8, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
+    }
+
+    #adminName {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: #374151;
+      margin-bottom: 50px;
+    }
+
+    /* Stats Cards */
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      margin-bottom: 60px;
+    }
+    .card {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(15px);
+      width: 200px;
+      padding: 30px 20px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+    }
+    .card h3 {
+      font-size: 2.4rem;
+      background: linear-gradient(90deg, #1d4ed8, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+    .card p {
+      font-weight: 600;
+      color: #374151;
+    }
+
+    /* Section Titles */
+    .section h3 {
+      color: #1d4ed8;
+      margin-bottom: 20px;
+      font-weight: 600;
+      font-size: 1.6rem;
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 15px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(15px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+      transition: all 0.3s;
+    }
+    th, td {
+      padding: 15px 12px;
+      text-align: center;
+    }
+    th {
+      background: linear-gradient(90deg, #1d4ed8, #3b82f6);
+      color: #fff;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    tr:nth-child(even) { background: rgba(255,255,255,0.05); }
+    tr:hover { background: rgba(59,130,246,0.1); transition: 0.3s; }
+
+    .badge {
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: #fff;
+      text-transform: uppercase;
+    }
+    .status-active { background: #10b981; }
+    .status-inprogress { background: #3b82f6; }
+    .status-completed { background: #f59e0b; }
+    .status-inactive { background: #6b7280; }
+
+    /* Bus Cards */
+    .bus-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+    .bus-card {
+      position: relative;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(15px);
+      width: 260px;
+      padding: 25px 20px;
+      border-radius: 25px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .bus-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+    }
+    .bus-card h4 {
+      color: #1d4ed8;
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+    }
+    .bus-card p {
+      color: #374151;
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+    .bus-status {
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 25px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #fff;
+      text-transform: uppercase;
+    }
+    .bus-moving {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #3b82f6;
+      animation: pulse 1.2s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.5); opacity: 0.4; }
+      100% { transform: scale(1); opacity: 0.8; }
+    }
+
+    /* Responsive */
+    @media(max-width:768px){
+      .stats, .bus-details { flex-direction: column; align-items: center; }
+    }
+  </style>
 </head>
 <body>
 
-<h2>Admin Dashboard - TransitGo</h2>
-<div id="adminName">Welcome</div>
+  <h2>Admin Dashboard - TransitGo</h2>
+  <div id="adminName">Welcome</div>
 
-<div class="stats">
-  <div class="card"><h3 id="totalUsers">0</h3><p>Total Users</p></div>
-  <div class="card"><h3 id="totalDrivers">0</h3><p>Total Drivers</p></div>
-  <div class="card"><h3 id="activeRoutes">0</h3><p>Active Routes</p></div>
-  <div class="card"><h3 id="completedRoutes">0</h3><p>Completed Routes</p></div>
-</div>
+  <div class="stats">
+    <div class="card"><h3 id="totalUsers">0</h3><p>Total Users</p></div>
+    <div class="card"><h3 id="totalDrivers">0</h3><p>Total Drivers</p></div>
+    <div class="card"><h3 id="activeRoutes">0</h3><p>Active Routes</p></div>
+    <div class="card"><h3 id="completedRoutes">0</h3><p>Completed Routes</p></div>
+  </div>
 
-<div class="section">
-  <h3>All Trips</h3>
-  <table id="tripsTable">
-    <thead>
-      <tr>
-        <th>Ticket ID</th><th>User Email</th><th>Route</th><th>Bus Number</th>
-        <th>Driver Name</th><th>Status</th><th>Date</th><th>Time</th><th>Seats</th><th>Price</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-</div>
+  <div class="section">
+    <h3>All Trips</h3>
+    <table id="tripsTable">
+      <thead>
+        <tr>
+          <th>Ticket ID</th><th>User Email</th><th>Route</th><th>Bus Number</th>
+          <th>Driver Name</th><th>Status</th><th>Date</th><th>Time</th><th>Seats</th><th>Price</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
 
-<div class="section">
-  <h3>All Buses & Status</h3>
-  <div class="bus-details" id="busDetailsContainer"></div>
-</div>
+  <div class="section">
+    <h3>All Buses & Status</h3>
+    <div class="bus-details" id="busDetailsContainer"></div>
+  </div>
 
-<script>
-// Predefined list of all buses (even if no trip is assigned)
-const allBusesList = [
-    {busNumber:144, route:"Chittoor → Chennai", driverName:"Driver-1"},
-    {busNumber:102, route:"Chittoor → Vellore", driverName:"Driver-2"},
-    {busNumber:103, route:"Chittoor → Tirupathur", driverName:"Driver-3"},
-    {busNumber:201, route:"Chittoor → Chandigarh", driverName:"Driver-4"},
-    {busNumber:202, route:"Chittoor → Chandigarh", driverName:"Driver-5"},
-    {busNumber:203, route:"Chittoor → Madhya Pradesh", driverName:"Driver-6"},
-    {busNumber:204, route:"Chittoor → Punjab", driverName:"Driver-7"},
-    {busNumber:205, route:"Chittoor → Uttar Pradesh", driverName:"Driver-8"},
-    {busNumber:206, route:"Chittoor → Gujarat", driverName:"Driver-9"}
-];
+  <script>
+    // Predefined list of all buses
+    const allBusesList = [
+      {busNumber:144, route:"Chittoor → Chennai", driverName:"Driver-1"},
+      {busNumber:102, route:"Chittoor → Vellore", driverName:"Driver-2"},
+      {busNumber:103, route:"Chittoor → Tirupathur", driverName:"Driver-3"},
+      {busNumber:201, route:"Chittoor → Chandigarh", driverName:"Driver-4"},
+      {busNumber:202, route:"Chittoor → Chandigarh", driverName:"Driver-5"},
+      {busNumber:203, route:"Chittoor → Madhya Pradesh", driverName:"Driver-6"},
+      {busNumber:204, route:"Chittoor → Punjab", driverName:"Driver-7"},
+      {busNumber:205, route:"Chittoor → Uttar Pradesh", driverName:"Driver-8"},
+      {busNumber:206, route:"Chittoor → Gujarat", driverName:"Driver-9"}
+    ];
 
-function loadAdminDashboard() {
-    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    const adminName = currentUser?.role === "Admin" ? currentUser.name : "Admin";
-    document.getElementById("adminName").innerText = `Welcome, ${adminName}`;
+    function loadAdminDashboard() {
+      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+      const adminName = currentUser?.role === "Admin" ? currentUser.name : "Admin";
+      document.getElementById("adminName").innerText = `Welcome, ${adminName}`;
 
-    const allTrips = JSON.parse(localStorage.getItem("allTrips")) || [];
-    const allBookings = JSON.parse(localStorage.getItem("allBookings")) || [];
-    const users = [...new Set(allBookings.map(b=>b.email))];
+      const allTrips = JSON.parse(localStorage.getItem("allTrips")) || [];
+      const allBookings = JSON.parse(localStorage.getItem("allBookings")) || [];
+      const users = [...new Set(allBookings.map(b=>b.email))];
 
-    // Merge trips info to allBusesList
-    const busData = allBusesList.map(bus => {
-        const trip = allTrips.find(t => t.busNumber === bus.busNumber);
-        return {
-            busNumber: bus.busNumber,
-            route: bus.route,
-            driverName: bus.driverName,
-            status: trip?.status || "inactive"
-        };
-    });
+      // Merge trips info to allBusesList
+      const busData = allBusesList.map(bus => {
+        const trip = allTrips.find(t => t.busNumber === bus.busNumber);
+        return {
+          busNumber: bus.busNumber,
+          route: bus.route,
+          driverName: bus.driverName,
+          status: trip?.status || "inactive"
+        };
+      });
 
-    // Stats
-    document.getElementById("totalUsers").innerText = users.length;
-    document.getElementById("totalDrivers").innerText = busData.length;
-    document.getElementById("activeRoutes").innerText = busData.filter(b=>b.status==="active" || b.status==="inprogress").length;
-    document.getElementById("completedRoutes").innerText = busData.filter(b=>b.status==="completed").length;
+      // Stats
+      document.getElementById("totalUsers").innerText = users.length;
+      document.getElementById("totalDrivers").innerText = busData.length;
+      document.getElementById("activeRoutes").innerText = busData.filter(b=>b.status==="active" || b.status==="inprogress").length;
+      document.getElementById("completedRoutes").innerText = busData.filter(b=>b.status==="completed").length;
 
-    // Trips Table
-    const tbody = document.querySelector("#tripsTable tbody");
-    tbody.innerHTML = "";
-    allTrips.forEach(trip=>{
-        const booking = allBookings.find(b=>b.id===trip.bookingId) || {};
-        const statusClass = trip.status==="active"?"status-active":trip.status==="completed"?"status-completed":"status-inprogress";
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td>${trip.bookingId}</td>
-          <td>${booking.email || "N/A"}</td>
-          <td>${trip.route}</td>
-          <td>${trip.busNumber}</td>
-          <td>${trip.driverName}</td>
-          <td><span class="badge ${statusClass}">${trip.status}</span></td>
-          <td>${booking.date || "N/A"}</td>
-          <td>${booking.time || "N/A"}</td>
-          <td>${booking.seats || "N/A"}</td>
-          <td>₹${booking.price || "0"}</td>
-        `;
-        tbody.appendChild(row);
-    });
-    if(allTrips.length===0) tbody.innerHTML=`<tr><td colspan="10">No Trips Found</td></tr>`;
+      // Trips Table
+      const tbody = document.querySelector("#tripsTable tbody");
+      tbody.innerHTML = "";
+      allTrips.forEach(trip=>{
+        const booking = allBookings.find(b=>b.id===trip.bookingId) || {};
+        const statusClass = trip.status==="active"?"status-active":trip.status==="completed"?"status-completed":"status-inprogress";
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${trip.bookingId}</td>
+          <td>${booking.email || "N/A"}</td>
+          <td>${trip.route}</td>
+          <td>${trip.busNumber}</td>
+          <td>${trip.driverName}</td>
+          <td><span class="badge ${statusClass}">${trip.status}</span></td>
+          <td>${booking.date || "N/A"}</td>
+          <td>${booking.time || "N/A"}</td>
+          <td>${booking.seats || "N/A"}</td>
+          <td>₹${booking.price || "0"}</td>
+        `;
+        tbody.appendChild(row);
+      });
+      if(allTrips.length===0) tbody.innerHTML=`<tr><td colspan="10">No Trips Found</td></tr>`;
 
-    // Bus Cards
-    const busContainer = document.getElementById("busDetailsContainer");
-    busContainer.innerHTML="";
-    busData.forEach(bus=>{
-        const div = document.createElement("div");
-        div.classList.add("bus-card");
-        let statusClass = "";
-        if(bus.status==="active") statusClass = "status-active";
-        else if(bus.status==="inprogress") statusClass = "status-inprogress";
-        else if(bus.status==="completed") statusClass = "status-completed";
-        else statusClass = "status-inactive";
+      // Bus Cards
+      const busContainer = document.getElementById("busDetailsContainer");
+      busContainer.innerHTML="";
+      busData.forEach(bus=>{
+        const div = document.createElement("div");
+        div.classList.add("bus-card");
+        let statusClass = "";
+        if(bus.status==="active") statusClass = "status-active";
+        else if(bus.status==="inprogress") statusClass = "status-inprogress";
+        else if(bus.status==="completed") statusClass = "status-completed";
+        else statusClass = "status-inactive";
 
-        div.innerHTML = `
-          <h4>Bus #${bus.busNumber}</h4>
-          <p>Route: ${bus.route}</p>
-          <p>Driver: ${bus.driverName}</p>
-          <span class="bus-status ${statusClass}">${bus.status.toUpperCase()}</span>
-          ${bus.status==="inprogress" ? '<div class="bus-moving"></div>' : ''}
-        `;
-        busContainer.appendChild(div);
-    });
-}
+        div.innerHTML = `
+          <h4>Bus #${bus.busNumber}</h4>
+          <p>Route: ${bus.route}</p>
+          <p>Driver: ${bus.driverName}</p>
+          <span class="bus-status ${statusClass}">${bus.status.toUpperCase()}</span>
+          ${bus.status==="inprogress" ? '<div class="bus-moving"></div>' : ''}
+        `;
+        busContainer.appendChild(div);
+      });
+    }
 
-loadAdminDashboard();
-setInterval(loadAdminDashboard, 3000);
-</script>
+    loadAdminDashboard();
+    setInterval(loadAdminDashboard, 3000);
+  </script>
 </body>
 </html>
