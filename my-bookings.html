@@ -70,24 +70,31 @@ const busData = [
   { route:"Madhya Pradesh → Gujarat", busNumber:306, driverName:"Driver-9" }
 ];
 
-function showMessage(text){document.getElementById('messageText').innerText=text;document.getElementById('messageBox').style.display='block';}
-function hideMessage(){document.getElementById('messageBox').style.display='none';}
+function showMessage(text){
+  document.getElementById('messageText').innerText=text;
+  document.getElementById('messageBox').style.display='block';
+}
+function hideMessage(){
+  document.getElementById('messageBox').style.display='none';
+}
 
 function loadBookings(){
   const user = JSON.parse(localStorage.getItem("currentUser"));
   const bookingsContainer = document.getElementById("bookingsContainer");
   bookingsContainer.innerHTML="";
   let allBookings = JSON.parse(localStorage.getItem("allBookings"))||[];
-  const userBookings = allBookings.filter(b=>user&&b.email===user.email);
+  const userBookings = allBookings.filter(b=>user && b.email===user.email);
 
-  if(userBookings.length===0){bookingsContainer.innerHTML="<p>No Bookings Found</p>"; return;}
+  if(userBookings.length===0){
+    bookingsContainer.innerHTML="<p>No Bookings Found</p>";
+    return;
+  }
 
   userBookings.forEach((booking,index)=>{
     const routeKey = booking.from + " → " + booking.to;
     const busInfo = busData.find(b=>b.route===routeKey);
 
     if(!busInfo){
-      // Only show invalid route message and skip further processing
       const div = document.createElement("div");
       div.classList.add("booking");
       div.innerHTML = `
@@ -98,10 +105,10 @@ function loadBookings(){
         <button class="btn cancel" onclick="cancelBooking('${booking.id}')">Cancel Ticket</button>
       `;
       bookingsContainer.appendChild(div);
-      return; // Skip map and animation
+      return;
     }
 
-    // Add trip to allTrips if not already added
+    // Save trip data
     let trips = JSON.parse(localStorage.getItem("allTrips"))||[];
     if(!trips.find(t=>t.bookingId===booking.id)){
       trips.push({bookingId:booking.id, route:routeKey, busNumber:busInfo.busNumber, driverName:busInfo.driverName, busType:"AC", status:"active"});
@@ -126,9 +133,8 @@ function loadBookings(){
     `;
     bookingsContainer.appendChild(div);
 
-    // Only initialize map if cities exist
-    if(cityCoords[booking.from]&&cityCoords[booking.to]){
-      initMap(`map${index}`,cityCoords[booking.from],cityCoords[booking.to],booking.id,booking);
+    if(cityCoords[booking.from] && cityCoords[booking.to]){
+      initMap(`map${index}`,cityCoords[booking.from],cityCoords[booking.to],booking.id);
     }
   });
 }
@@ -146,12 +152,12 @@ function cancelBooking(id){
   loadBookings();
 }
 
-// PDF and map functions remain unchanged
 async function downloadPDF(id){
   const { jsPDF } = window.jspdf;
   let allBookings = JSON.parse(localStorage.getItem("allBookings"))||[];
   const booking = allBookings.find(b=>b.id===id);
   if(!booking){showMessage("Ticket not found!");return;}
+
   const doc = new jsPDF();
   doc.setFont("helvetica","normal");
   let img = new Image();
@@ -160,19 +166,37 @@ async function downloadPDF(id){
     doc.addImage(img,"PNG",160,10,30,30);
     doc.setFontSize(18); doc.setTextColor(0,102,204);
     doc.text("TransitGo - Ticket",20,20);
-    doc.autoTable({startY:50,head:[["Field","Details"]],body:[["Ticket ID",booking.id],["From",booking.from],["To",booking.to],["Date",booking.date],["Time",booking.time||"Not Provided"],["Seats",booking.seats],["Price",`₹${booking.price}`],["Booked At",booking.bookedAt]],theme:"grid",styles:{font:"helvetica",fontSize:12,halign:"center"},headStyles:{fillColor:[0,102,204],textColor:255},alternateRowStyles:{fillColor:[220,230,240]}});
+    doc.autoTable({
+      startY:50,
+      head:[["Field","Details"]],
+      body:[
+        ["Ticket ID",booking.id],
+        ["From",booking.from],
+        ["To",booking.to],
+        ["Date",booking.date],
+        ["Time",booking.time||"Not Provided"],
+        ["Seats",booking.seats],
+        ["Price",`₹${booking.price}`],
+        ["Booked At",booking.bookedAt]
+      ],
+      theme:"grid",
+      styles:{font:"helvetica",fontSize:12,halign:"center"},
+      headStyles:{fillColor:[0,102,204],textColor:255},
+      alternateRowStyles:{fillColor:[220,230,240]}
+    });
     doc.setFontSize(14); doc.setTextColor(0,128,0);
     doc.text("✨ Have a safe journey! ✨",65,doc.internal.pageSize.height-20);
     doc.save(`Ticket_${booking.id}.pdf`);
   };
 }
 
-function initMap(mapId, fromLatLng, toLatLng, bookingId, booking){
+function initMap(mapId, fromLatLng, toLatLng, bookingId){
   const map = L.map(mapId).setView(fromLatLng,7);
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{attribution:"&copy; OpenStreetMap contributors"}).addTo(map);
   const routeLine = L.polyline([fromLatLng,toLatLng],{color:"blue"}).addTo(map);
   map.fitBounds(routeLine.getBounds());
   setTimeout(()=>map.invalidateSize(),200);
+
   const busIcon = L.divIcon({html:"🚍",className:"bus-icon",iconSize:[30,30]});
   const busMarker = L.marker(fromLatLng,{icon:busIcon}).addTo(map);
 
@@ -191,7 +215,6 @@ function initMap(mapId, fromLatLng, toLatLng, bookingId, booking){
       i++; 
       setTimeout(moveBus,100);
     } else {
-      // Bus reached destination, no message displayed
       let trips = JSON.parse(localStorage.getItem("allTrips"))||[];
       let tripIndex = trips.findIndex(t=>t.bookingId===bookingId);
       if(tripIndex!==-1){
@@ -202,8 +225,8 @@ function initMap(mapId, fromLatLng, toLatLng, bookingId, booking){
   }
   moveBus();
 }
-loadBookings();
 
+// Initial load
 loadBookings();
 </script>
 </body>
