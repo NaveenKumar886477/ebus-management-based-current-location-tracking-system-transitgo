@@ -229,15 +229,18 @@
     const users = [...new Set(allBookings.map(b => b.email))];
 
     // merge trips into bus list
-    const busData = allBusesList.map(bus => {
-      const trip = allTrips.find(t => t.busNumber === bus.busNumber);
-      return {
-        busNumber: bus.busNumber,
-        route: bus.route,
-        driverName: bus.driverName,
-        status: trip?.status || "inactive"
-      };
-    });
+   // merge trips into bus list correctly
+const busData = allBusesList.map(bus => {
+  // Find trip that matches this bus number AND route
+  const trip = allTrips.find(t => t.busNumber === bus.busNumber && t.route === bus.route);
+  return {
+    busNumber: bus.busNumber,
+    route: bus.route,
+    driverName: bus.driverName,
+    status: trip?.status || "inactive"
+  };
+});
+
 
     // Stats
     document.getElementById("totalUsers").innerText = users.length;
