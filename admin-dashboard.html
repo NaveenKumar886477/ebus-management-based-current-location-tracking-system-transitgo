@@ -206,18 +206,20 @@
     <h3>All Buses & Status</h3>
     <div class="bus-details" id="busDetailsContainer"></div>
   </div>
-<script>
-  const allBusesList = [
-    {busNumber:144, route:"Chittoor → Chennai", driverName:"Driver-1"},
-    {busNumber:102, route:"Chittoor → Vellore", driverName:"Driver-2"},
-    {busNumber:202, route:"Chittoor → Tirupathur", driverName:"Driver-3"},
-    {busNumber:201, route:"Chittoor → Chandigarh", driverName:"Driver-4"},
-    {busNumber:103, route:"Chittoor → Chandigarh", driverName:"Driver-5"},
-    {busNumber:203, route:"Chittoor → Madhya Pradesh", driverName:"Driver-6"},
-    {busNumber:204, route:"Chittoor → Punjab", driverName:"Driver-7"},
-    {busNumber:205, route:"Chittoor → Uttar Pradesh", driverName:"Driver-8"},
-    {busNumber:206, route:"Chittoor → Gujarat", driverName:"Driver-9"}
-  ];function loadAdminDashboard() {
+  <script>
+const allBusesList = [
+  {busNumber:144, route:"Chittoor → Chennai", driverName:"Driver-1"},
+  {busNumber:102, route:"Chittoor → Vellore", driverName:"Driver-2"},
+  {busNumber:202, route:"Chittoor → Tirupathur", driverName:"Driver-3"},
+  {busNumber:201, route:"Chittoor → Chandigarh", driverName:"Driver-4"},
+  {busNumber:103, route:"Chittoor → Chandigarh", driverName:"Driver-5"},
+  {busNumber:203, route:"Chittoor → Madhya Pradesh", driverName:"Driver-6"},
+  {busNumber:204, route:"Chittoor → Punjab", driverName:"Driver-7"},
+  {busNumber:205, route:"Chittoor → Uttar Pradesh", driverName:"Driver-8"},
+  {busNumber:206, route:"Chittoor → Gujarat", driverName:"Driver-9"}
+];
+
+function loadAdminDashboard() {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const adminName = currentUser?.role === "Admin" ? currentUser.name : "Admin";
   document.getElementById("adminName").innerText = `Welcome, ${adminName}`;
@@ -226,17 +228,19 @@
   const allBookings = JSON.parse(localStorage.getItem("allBookings")) || [];
   const users = [...new Set(allBookings.map(b => b.email))];
 
-  // Correct busData mapping
+  // Merge trips into buses
   const busData = allBusesList.map(bus => {
-    const trip = allTrips
-      .filter(t => t.busNumber === bus.busNumber && t.route === bus.route)
-      .sort((a,b) => new Date(b.date + ' ' + b.time) - new Date(a.date + ' ' + a.time))[0];
-    return {
-      busNumber: bus.busNumber,
-      route: bus.route,
-      driverName: bus.driverName,
-      status: trip?.status || "inactive"
-    };
+    // Get all trips for this bus
+    const tripsForBus = allTrips.filter(t => t.busNumber === bus.busNumber);
+    // Determine bus status: priority: active > inprogress > completed > inactive
+    let status = "inactive";
+    for (let t of tripsForBus) {
+      const s = t.status?.toLowerCase().trim();
+      if (s === "active") { status = "active"; break; }
+      if (s === "inprogress" && status !== "active") status = "inprogress";
+      if (s === "completed" && status !== "active" && status !== "inprogress") status = "completed";
+    }
+    return { ...bus, status };
   });
 
   // Update Stats dynamically
@@ -254,9 +258,10 @@
     allTrips.forEach(trip => {
       const booking = allBookings.find(b => b.id === trip.bookingId) || {};
       let statusClass = "status-inactive";
-      if (trip.status === "active") statusClass = "status-active";
-      else if (trip.status === "inprogress") statusClass = "status-inprogress";
-      else if (trip.status === "completed") statusClass = "status-completed";
+      const s = trip.status?.toLowerCase().trim();
+      if (s === "active") statusClass = "status-active";
+      else if (s === "inprogress") statusClass = "status-inprogress";
+      else if (s === "completed") statusClass = "status-completed";
 
       const row = document.createElement("tr");
       row.innerHTML = `
@@ -280,9 +285,10 @@
   busContainer.innerHTML = "";
   busData.forEach(bus => {
     let statusClass = "status-inactive";
-    if (bus.status === "active") statusClass = "status-active";
-    else if (bus.status === "inprogress") statusClass = "status-inprogress";
-    else if (bus.status === "completed") statusClass = "status-completed";
+    const s = bus.status?.toLowerCase();
+    if (s === "active") statusClass = "status-active";
+    else if (s === "inprogress") statusClass = "status-inprogress";
+    else if (s === "completed") statusClass = "status-completed";
 
     const div = document.createElement("div");
     div.classList.add("bus-card");
@@ -300,8 +306,8 @@
 // Run immediately and refresh every 3s
 loadAdminDashboard();
 setInterval(loadAdminDashboard, 3000);
-
 </script>
+
 
 </body>
 </html>
