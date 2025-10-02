@@ -174,7 +174,6 @@ function cancelTrip(bookingId){
   const reason = prompt("Enter reason for cancellation:");
   if(!reason) return alert("Cancellation reason required!");
   let allTrips = JSON.parse(localStorage.getItem("allTrips"))||[];
-  let allBookings = JSON.parse(localStorage.getItem("allBookings")) || [];
   allTrips = allTrips.map(t=>t.bookingId===bookingId?{...t,status:"cancelled",cancellationReason:reason}:t);
   localStorage.setItem("allTrips",JSON.stringify(allTrips));
 
