@@ -62,12 +62,12 @@ const busData = [
   { route:"Chittoor → Chennai", busNumber:144, driverName:"Driver-1" },
   { route:"Chittoor → Vellore", busNumber:102, driverName:"Driver-2" },
   { route:"Chittoor → Tirupathur", busNumber:202, driverName:"Driver-3" },
-  { route:"Chittoor → Chandigarh", busNumber:301, driverName:"Driver-4" },
-  { route:"Chittoor → Chandigarh", busNumber:302, driverName:"Driver-5" },
-  { route:"Chittoor → Madhya Pradesh", busNumber:303, driverName:"Driver-6" },
-  { route:"Chittoor → Punjab", busNumber:304, driverName:"Driver-7" },
-  { route:"Chittoor→ Uttar Pradesh", busNumber:305, driverName:"Driver-8" },
-  { route:"Chittoor → Gujarat", busNumber:306, driverName:"Driver-9" }
+  { route:"Haryana → Chandigarh", busNumber:301, driverName:"Driver-4" },
+  { route:"Punjab → Chandigarh", busNumber:302, driverName:"Driver-5" },
+  { route:"Uttar Pradesh → Madhya Pradesh", busNumber:303, driverName:"Driver-6" },
+  { route:"Himachal Pradesh → Punjab", busNumber:304, driverName:"Driver-7" },
+  { route:"Gujarat → Uttar Pradesh", busNumber:305, driverName:"Driver-8" },
+  { route:"Madhya Pradesh → Gujarat", busNumber:306, driverName:"Driver-9" }
 ];
 
 function showMessage(text){
@@ -92,7 +92,10 @@ function loadBookings(){
 
   userBookings.forEach((booking,index)=>{
     const routeKey = booking.from + " → " + booking.to;
-    const busInfo = busData.find(b=>b.route===routeKey);
+    const reverseKey = booking.to + " → " + booking.from;
+
+    // ✅ FIX: check both directions
+    const busInfo = busData.find(b=>b.route === routeKey || b.route === reverseKey);
 
     if(!busInfo){
       const div = document.createElement("div");
