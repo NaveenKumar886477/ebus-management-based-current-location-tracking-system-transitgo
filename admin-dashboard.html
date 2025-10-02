@@ -206,53 +206,58 @@
     <h3>All Buses & Status</h3>
     <div class="bus-details" id="busDetailsContainer"></div>
   </div>
+<script>
+  const allBusesList = [
+    {busNumber:144, route:"Chittoor → Chennai", driverName:"Driver-1"},
+    {busNumber:102, route:"Chittoor → Vellore", driverName:"Driver-2"},
+    {busNumber:103, route:"Chittoor → Tirupathur", driverName:"Driver-3"},
+    {busNumber:201, route:"Chittoor → Chandigarh", driverName:"Driver-4"},
+    {busNumber:202, route:"Chittoor → Chandigarh", driverName:"Driver-5"},
+    {busNumber:203, route:"Chittoor → Madhya Pradesh", driverName:"Driver-6"},
+    {busNumber:204, route:"Chittoor → Punjab", driverName:"Driver-7"},
+    {busNumber:205, route:"Chittoor → Uttar Pradesh", driverName:"Driver-8"},
+    {busNumber:206, route:"Chittoor → Gujarat", driverName:"Driver-9"}
+  ];
 
-  <script>
-    // Predefined list of all buses
-    const allBusesList = [
-      {busNumber:144, route:"Chittoor → Chennai", driverName:"Driver-1"},
-      {busNumber:102, route:"Chittoor → Vellore", driverName:"Driver-2"},
-      {busNumber:103, route:"Chittoor → Tirupathur", driverName:"Driver-3"},
-      {busNumber:201, route:"Chittoor → Chandigarh", driverName:"Driver-4"},
-      {busNumber:202, route:"Chittoor → Chandigarh", driverName:"Driver-5"},
-      {busNumber:203, route:"Chittoor → Madhya Pradesh", driverName:"Driver-6"},
-      {busNumber:204, route:"Chittoor → Punjab", driverName:"Driver-7"},
-      {busNumber:205, route:"Chittoor → Uttar Pradesh", driverName:"Driver-8"},
-      {busNumber:206, route:"Chittoor → Gujarat", driverName:"Driver-9"}
-    ];
+  function loadAdminDashboard() {
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    const adminName = currentUser?.role === "Admin" ? currentUser.name : "Admin";
+    document.getElementById("adminName").innerText = `Welcome, ${adminName}`;
 
-    function loadAdminDashboard() {
-      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-      const adminName = currentUser?.role === "Admin" ? currentUser.name : "Admin";
-      document.getElementById("adminName").innerText = `Welcome, ${adminName}`;
+    const allTrips = JSON.parse(localStorage.getItem("allTrips")) || [];
+    const allBookings = JSON.parse(localStorage.getItem("allBookings")) || [];
+    const users = [...new Set(allBookings.map(b => b.email))];
 
-      const allTrips = JSON.parse(localStorage.getItem("allTrips")) || [];
-      const allBookings = JSON.parse(localStorage.getItem("allBookings")) || [];
-      const users = [...new Set(allBookings.map(b=>b.email))];
+    // merge trips into bus list
+    const busData = allBusesList.map(bus => {
+      const trip = allTrips.find(t => t.busNumber === bus.busNumber);
+      return {
+        busNumber: bus.busNumber,
+        route: bus.route,
+        driverName: bus.driverName,
+        status: trip?.status || "inactive"
+      };
+    });
 
-      // Merge trips info to allBusesList
-      const busData = allBusesList.map(bus => {
-        const trip = allTrips.find(t => t.busNumber === bus.busNumber);
-        return {
-          busNumber: bus.busNumber,
-          route: bus.route,
-          driverName: bus.driverName,
-          status: trip?.status || "inactive"
-        };
-      });
+    // Stats
+    document.getElementById("totalUsers").innerText = users.length;
+    document.getElementById("totalDrivers").innerText = allBusesList.length;
+    document.getElementById("activeRoutes").innerText = busData.filter(b => b.status === "active" || b.status === "inprogress").length;
+    document.getElementById("completedRoutes").innerText = busData.filter(b => b.status === "completed").length;
 
-      // Stats
-      document.getElementById("totalUsers").innerText = users.length;
-      document.getElementById("totalDrivers").innerText = busData.length;
-      document.getElementById("activeRoutes").innerText = busData.filter(b=>b.status==="active" || b.status==="inprogress").length;
-      document.getElementById("completedRoutes").innerText = busData.filter(b=>b.status==="completed").length;
+    // Trips Table
+    const tbody = document.querySelector("#tripsTable tbody");
+    tbody.innerHTML = "";
+    if (allTrips.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="10">No Trips Found</td></tr>`;
+    } else {
+      allTrips.forEach(trip => {
+        const booking = allBookings.find(b => b.id === trip.bookingId) || {};
+        let statusClass = "status-inactive";
+        if (trip.status === "active") statusClass = "status-active";
+        else if (trip.status === "inprogress") statusClass = "status-inprogress";
+        else if (trip.status === "completed") statusClass = "status-completed";
 
-      // Trips Table
-      const tbody = document.querySelector("#tripsTable tbody");
-      tbody.innerHTML = "";
-      allTrips.forEach(trip=>{
-        const booking = allBookings.find(b=>b.id===trip.bookingId) || {};
-        const statusClass = trip.status==="active"?"status-active":trip.status==="completed"?"status-completed":"status-inprogress";
         const row = document.createElement("tr");
         row.innerHTML = `
           <td>${trip.bookingId}</td>
@@ -260,7 +265,7 @@
           <td>${trip.route}</td>
           <td>${trip.busNumber}</td>
           <td>${trip.driverName}</td>
-          <td><span class="badge ${statusClass}">${trip.status}</span></td>
+          <td><span class="badge ${statusClass}">${trip.status.toUpperCase()}</span></td>
           <td>${booking.date || "N/A"}</td>
           <td>${booking.time || "N/A"}</td>
           <td>${booking.seats || "N/A"}</td>
@@ -268,33 +273,34 @@
         `;
         tbody.appendChild(row);
       });
-      if(allTrips.length===0) tbody.innerHTML=`<tr><td colspan="10">No Trips Found</td></tr>`;
-
-      // Bus Cards
-      const busContainer = document.getElementById("busDetailsContainer");
-      busContainer.innerHTML="";
-      busData.forEach(bus=>{
-        const div = document.createElement("div");
-        div.classList.add("bus-card");
-        let statusClass = "";
-        if(bus.status==="active") statusClass = "status-active";
-        else if(bus.status==="inprogress") statusClass = "status-inprogress";
-        else if(bus.status==="completed") statusClass = "status-completed";
-        else statusClass = "status-inactive";
-
-        div.innerHTML = `
-          <h4>Bus #${bus.busNumber}</h4>
-          <p>Route: ${bus.route}</p>
-          <p>Driver: ${bus.driverName}</p>
-          <span class="bus-status ${statusClass}">${bus.status.toUpperCase()}</span>
-          ${bus.status==="inprogress" ? '<div class="bus-moving"></div>' : ''}
-        `;
-        busContainer.appendChild(div);
-      });
     }
 
-    loadAdminDashboard();
-    setInterval(loadAdminDashboard, 3000);
-  </script>
+    // Bus Cards
+    const busContainer = document.getElementById("busDetailsContainer");
+    busContainer.innerHTML = "";
+    busData.forEach(bus => {
+      let statusClass = "status-inactive";
+      if (bus.status === "active") statusClass = "status-active";
+      else if (bus.status === "inprogress") statusClass = "status-inprogress";
+      else if (bus.status === "completed") statusClass = "status-completed";
+
+      const div = document.createElement("div");
+      div.classList.add("bus-card");
+      div.innerHTML = `
+        <h4>Bus #${bus.busNumber}</h4>
+        <p>Route: ${bus.route}</p>
+        <p>Driver: ${bus.driverName}</p>
+        <span class="bus-status ${statusClass}">${bus.status.toUpperCase()}</span>
+        ${bus.status === "inprogress" ? '<div class="bus-moving"></div>' : ''}
+      `;
+      busContainer.appendChild(div);
+    });
+  }
+
+  // Run immediately and refresh every 3s
+  loadAdminDashboard();
+  setInterval(loadAdminDashboard, 3000);
+</script>
+
 </body>
 </html>
